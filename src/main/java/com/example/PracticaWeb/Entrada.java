@@ -12,6 +12,11 @@ public class Entrada {
 
     private String id;
     private final static int precio=10;
+    private String datos;
+
+    public Entrada(String datos){
+        this.datos=datos;
+    }
 
 
     public String getId() {

@@ -64,9 +64,9 @@ public class EventRestController {
 
     ////CREATING AND SHOWING TICKETS, TICKETS ARE PERMANENT, YOU SHOULDNT BE ABLE TO DESTROY OR MODIFY THEM
     @PostMapping("/events/{cod}/ticket")
-    public ResponseEntity<Entrada> creatingTicket(@PathVariable String cod){
+    public ResponseEntity<Entrada> creatingTicket(@PathVariable String cod,@RequestBody Entrada entrada){
         if(eventHolder.unique(cod)!=null){
-            return new ResponseEntity<>(eventHolder.addTicket(cod), HttpStatus.OK);
+            return new ResponseEntity<>(eventHolder.addTicket(cod,entrada), HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

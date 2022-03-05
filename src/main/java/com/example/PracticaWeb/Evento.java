@@ -29,10 +29,10 @@ public class Evento {
         return sold;
     }
 
-    public Entrada addTicket(){
+    public Entrada addTicket(Entrada e){
         String id=this.cod.concat(String.valueOf(cont));
         cont++;
-        Entrada t= new Entrada(id);
+        Entrada t= new Entrada(id,e.getDatos());
         sold.put(t.getId(),t);
         return t;
     }

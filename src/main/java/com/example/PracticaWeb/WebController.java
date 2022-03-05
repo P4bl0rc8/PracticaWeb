@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class WebController {
@@ -25,6 +26,12 @@ public class WebController {
         return "evento";
     }
 
+    @PostMapping("/events/{cod}/newticket")
+    public String crearentrada(Model model,@PathVariable String cod,Entrada e){
+        model.addAttribute("evento",eventHolder.unique(cod));
+        model.addAttribute("ticket",eventHolder.addTicket(cod,e));
+        return "showticket";
+    }
 
 
 }

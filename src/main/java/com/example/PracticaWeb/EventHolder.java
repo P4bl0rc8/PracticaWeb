@@ -19,11 +19,11 @@ public class EventHolder {
     public void addEvent(Evento e,String cod){
         events.put(cod,e);
     }
-    public Entrada addTicket(String cod){
+    public Entrada addTicket(String cod,Entrada e){
         Evento aux=events.get(cod);
         Entrada t;
         if (aux!=null){
-           t = events.get(cod).addTicket();
+           t = events.get(cod).addTicket(e);
         }else{
             t=null;
         }
