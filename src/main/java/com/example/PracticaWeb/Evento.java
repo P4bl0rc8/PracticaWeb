@@ -30,7 +30,7 @@ public class Evento {
     }
 
     public Entrada addTicket(Entrada e){
-        String id=this.cod.concat(String.valueOf(cont));
+        String id=this.cod.concat(String.valueOf("-"+cont));
         cont++;
         Entrada t= new Entrada(id,e.getDatos());
         sold.put(t.getId(),t);
