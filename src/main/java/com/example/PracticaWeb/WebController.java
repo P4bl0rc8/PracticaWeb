@@ -25,6 +25,12 @@ public class WebController {
         model.addAttribute("evento",eventHolder.unique(cod));
         return "evento";
     }
+    @PostMapping("/events/new")
+    public String newevent(Model model,Evento evento){
+        eventHolder.addEvent(evento);
+        model.addAttribute("evento",eventHolder.unique(evento.getCod()));
+        return "evento";
+    }
 
     @PostMapping("/events/{cod}/newticket")
     public String crearentrada(Model model,@PathVariable String cod,Entrada e){
