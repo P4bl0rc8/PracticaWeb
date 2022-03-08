@@ -52,12 +52,43 @@
                         <optgroup label="genero">
                             <option value="techno" >Techno</option>
                             <option value="reggaeton">Reggaeton</option>
-                            <option value="remember">Remember</option>
+                            <option value="trap">Trap</option>
                         </optgroup>
                     </select>
                     <textarea name="descripcion" id="descripcion" ></textarea>
                     <script> CKEDITOR.replace( 'descripcion' );</script>
                     <button type="sumbit" class="btn btn-primary">Crear evento</button><br></form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" >
+            <div class="col-lg-8 mx-auto">
+                <h2>Quieres actualizar un evento?</h2>
+                <form class="form-control" method="post" action="/events/update">
+                    <input class="bg-light form-control" type="text" name="nombre" placeholder="Nombre del evento" />
+                    <input class="bg-light form-control" type="text" name="cod" placeholder="Código del evento" />
+                    <input class="bg-light form-control" type="date" name="fecha" placeholder="dd/mm/yyy" />
+                    <select>
+                        <optgroup label="genero">
+                            <option value="techno" >Techno</option>
+                            <option value="reggaeton">Reggaeton</option>
+                            <option value="trap">Trap</option>
+                        </optgroup>
+                    </select>
+                    <textarea name="descripcion" id="descripcion1" ></textarea>
+                    <script> CKEDITOR.replace( 'descripcion1' );</script>
+                    <button type="sumbit" class="btn btn-primary">Actualizar evento</button><br></form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" >
+            <div class="col-lg-8 mx-auto">
+                <h2>Quieres eliminar un evento?</h2>
+                <form class="form-control" method="post" action="/events/delete">
+                    <input class="bg-light form-control" type="text" name="cod" placeholder="Código del evento" />
+                    <button type="sumbit" class="btn btn-primary">Eliminar evento</button><br></form>
             </div>
         </div>
     </div>

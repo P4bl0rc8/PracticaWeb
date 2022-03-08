@@ -22,8 +22,10 @@ public class WebController {
 
     @GetMapping("/events/{cod}")
     public String unicoevento(Model model, @PathVariable String cod){
+
         model.addAttribute("evento",eventHolder.unique(cod));
         return "evento";
+
     }
     @PostMapping("/events/new")
     public String newevent(Model model,Evento evento){
