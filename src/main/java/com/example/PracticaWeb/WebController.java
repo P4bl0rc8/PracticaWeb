@@ -41,5 +41,23 @@ public class WebController {
         return "showticket";
     }
 
+    @PostMapping("/events/update")
+    public String updateevent(Model model,Evento e){
+        eventHolder.switchinTickets(e.getCod(),e);
+        eventHolder.addEvent(e);
+        model.addAttribute("evento",eventHolder.unique(e.getCod()));
+        return "evento";
+    }
+
+    @PostMapping("/events/delete")
+    public String deleteevent(Model model,Evento e){
+        eventHolder.remove(e.getCod());
+        model.addAttribute("anuncios",eventHolder.eventoCollection());
+        return "tablon";
+    }
+
+
+
+
 
 }
