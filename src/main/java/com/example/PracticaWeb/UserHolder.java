@@ -11,21 +11,31 @@ public class UserHolder {
 
     private Map<String, Usuario> users = new ConcurrentHashMap<>();
 
-    public void addUser(String username, Usuario user){users.put(username, user);}
-    public void addUser(Usuario user){users.put(user.getUsername(), user);}
+    public void addUser(String username, Usuario user) {
+        users.put(username, user);
+    }
 
-    public Collection<Usuario> userCollection(){
+    public void addUser(Usuario user) {
+        users.put(user.getUsername(), user);
+    }
+
+    public Collection<Usuario> userCollection() {
         Collection<Usuario> aux = users.values();
         return aux;
     }
 
-    public Usuario unique(String username){
+    public Usuario unique(String username) {
         Usuario aux = users.get(username);
-        if(aux!=null){
+        if (aux != null) {
             return aux;
-        }else{
+        } else {
             return null;
         }
     }
 
+    public Usuario delete(String username) {
+
+        return users.remove(username);
+
+    }
 }
