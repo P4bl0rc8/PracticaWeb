@@ -19,12 +19,13 @@
     </button></div></nav>
     <header class="masthead" style="background-image:url('assets/img/intro-bg.jpg');">
     <div class="intro-body">
-        <section class="login-dark form">
-            <form method="post">
-                <h2 class="visually-hidden">Login Form</h2>
+        <section class="login-dark form" >
+            <form method="post" action="/users/new">
+                <h2 class="visually-hidden">Register Form</h2>
                 <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-                <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email"></div>
-                <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Username" /></div>
+                <div class="mb-3"><input class="form-control" type="text" name="email" placeholder="Email" /></div>
+                <div class="mb-3"><input class="form-control" type="text" name="password" placeholder="Password" /></div>
                 <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Register In</button>
                 </div><a class="forgot" href="login.html">Already registered?</a>
             </form>
