@@ -20,7 +20,6 @@ public class Evento {
     private String descripcion;
     private Map<String,Entrada> sold=new ConcurrentHashMap<>();
     private static long cont=0;
-
     public String getCod() {
         return cod;
     }

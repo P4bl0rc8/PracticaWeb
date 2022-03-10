@@ -40,7 +40,7 @@ public class WebUserControllers {
         if(aux!=null){
             model.addAttribute("user",userHolder.unique(u.getUsername()));
             userHolder.delete(u.getUsername());
-            return "showuser";
+            return "deleteuser";
 
         }else{
             return "error";
@@ -52,7 +52,7 @@ public class WebUserControllers {
     public String searchUser(Model model, Usuario u){
         if (userHolder.unique(u.getUsername())!=null) {
             model.addAttribute("user",userHolder.unique(u.getUsername()));
-            return "showuser";
+            return "checkuser";
         }
         else{return "error";}
     }
