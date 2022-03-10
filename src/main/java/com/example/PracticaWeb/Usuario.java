@@ -13,7 +13,7 @@ public class Usuario {
     private String email;
     private String password;
 
-    public String getPass(){ return password;}
+    public String getPassword(){ return password;}
 
     public String getUsername() {
         return username;

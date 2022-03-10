@@ -22,7 +22,6 @@ public class UserRestController {
     //CREATE USER//
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-
     public Usuario newUser(@RequestBody Usuario user){
         userHolder.addUser(user);
         return user;
