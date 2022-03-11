@@ -17,9 +17,14 @@ public class EventRestController {
     //CREATE EVENT
     @PostMapping("/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public Evento newEvent (@RequestBody Evento event){
-        eventHolder.addEvent(event);
-        return event;
+    public ResponseEntity<Evento> newEvent (@RequestBody Evento event){
+        String aux = String.valueOf(eventHolder.unique(event.getCod()));
+        if (aux == null) {
+            eventHolder.addEvent(event);
+            return new ResponseEntity<>(event, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
     //RETURN ALL EVENTS
     @GetMapping("/events")

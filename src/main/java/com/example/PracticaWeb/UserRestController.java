@@ -22,9 +22,15 @@ public class UserRestController {
     //CREATE USER//
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario newUser(@RequestBody Usuario user){
-        userHolder.addUser(user);
-        return user;
+    public ResponseEntity<Usuario>  newUser(@RequestBody Usuario user){
+        String aux = String.valueOf(userHolder.unique(user.getUsername()));
+        if (aux == null) {
+            userHolder.addUser(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     //RETURN ALL USERS//
