@@ -31,9 +31,14 @@ public class WebController {
     }
     @PostMapping("/events/new")
     public String newEvent(Model model,Evento evento){
-        eventHolder.addEvent(evento);
-        model.addAttribute("evento",eventHolder.unique(evento.getCod()));
-        return "evento";
+        Evento aux = eventHolder.unique(evento.getCod());
+        if (aux == null) {
+            eventHolder.addEvent(evento);
+            model.addAttribute("evento",eventHolder.unique(evento.getCod()));
+            return "evento";
+        } else {
+            return "error";
+        }
     }
 
     @PostMapping("/events/update")

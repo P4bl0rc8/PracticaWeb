@@ -18,7 +18,7 @@ public class EventRestController {
     @PostMapping("/events")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Evento> newEvent (@RequestBody Evento event){
-        String aux = String.valueOf(eventHolder.unique(event.getCod()));
+        Evento aux = eventHolder.unique(event.getCod());
         if (aux == null) {
             eventHolder.addEvent(event);
             return new ResponseEntity<>(event, HttpStatus.OK);

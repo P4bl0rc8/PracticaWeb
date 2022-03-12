@@ -23,7 +23,7 @@ public class UserRestController {
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Usuario>  newUser(@RequestBody Usuario user){
-        String aux = String.valueOf(userHolder.unique(user.getUsername()));
+        Usuario aux = userHolder.unique(user.getUsername());
         if (aux == null) {
             userHolder.addUser(user);
             return new ResponseEntity<>(user, HttpStatus.OK);

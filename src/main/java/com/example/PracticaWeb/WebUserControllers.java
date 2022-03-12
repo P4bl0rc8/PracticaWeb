@@ -15,9 +15,14 @@ public class WebUserControllers {
     //USER CONTROLLERS//
     @PostMapping("/users/new")
     public String newUser(Model model, Usuario u){
-        userHolder.addUser(u);
-        model.addAttribute("user", userHolder.unique(u.getUsername()));
-        return "showuser";
+        Usuario aux = userHolder.unique(u.getUsername());
+        if (aux == null) {
+            userHolder.addUser(u);
+            model.addAttribute("user", userHolder.unique(u.getUsername()));
+            return "showuser";
+        } else {
+            return "error";
+        }
     }
 
     @PostMapping("/users/update")
