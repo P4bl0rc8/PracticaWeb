@@ -1,5 +1,7 @@
-package com.example.PracticaWeb;
+package com.example.PracticaWeb.Controller.Web;
 
+import com.example.PracticaWeb.Entity.User;
+import com.example.PracticaWeb.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +16,8 @@ public class WebUserControllers {
 
     //USER CONTROLLERS//
     @PostMapping("/users/new")
-    public String newUser(Model model, Usuario u){
-        Usuario aux = userHolder.unique(u.getUsername());
+    public String newUser(Model model, User u){
+        User aux = userHolder.unique(u.getUsername());
         if (aux == null) {
             userHolder.addUser(u);
             model.addAttribute("user", userHolder.unique(u.getUsername()));
@@ -26,9 +28,9 @@ public class WebUserControllers {
     }
 
     @PostMapping("/users/update")
-    public String updateUser(Model model, Usuario updatedUser){
+    public String updateUser(Model model, User updatedUser){
 
-        Usuario aux = userHolder.unique(updatedUser.getUsername());
+        User aux = userHolder.unique(updatedUser.getUsername());
         if(aux != null){
             model.addAttribute("user",updatedUser);
             userHolder.addUser(updatedUser);
@@ -39,9 +41,9 @@ public class WebUserControllers {
     }
 
     @PostMapping("/users/delete")
-    public String deleteUser(Model model,Usuario u){
+    public String deleteUser(Model model, User u){
 
-        Usuario aux = userHolder.unique(u.getUsername());
+        User aux = userHolder.unique(u.getUsername());
         if(aux!=null){
             model.addAttribute("user",userHolder.unique(u.getUsername()));
             userHolder.delete(u.getUsername());
@@ -54,7 +56,7 @@ public class WebUserControllers {
     }
 
     @PostMapping("/users/view")
-    public String searchUser(Model model, Usuario u){
+    public String searchUser(Model model, User u){
         if (userHolder.unique(u.getUsername())!=null) {
             model.addAttribute("user",userHolder.unique(u.getUsername()));
             return "checkuser";

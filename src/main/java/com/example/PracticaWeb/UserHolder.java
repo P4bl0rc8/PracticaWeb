@@ -1,5 +1,6 @@
 package com.example.PracticaWeb;
 
+import com.example.PracticaWeb.Entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -9,23 +10,23 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class UserHolder {
 
-    private Map<String, Usuario> users = new ConcurrentHashMap<>();
+    private Map<String, User> users = new ConcurrentHashMap<>();
 
-    public void addUser(String username, Usuario user) {
+    public void addUser(String username, User user) {
         users.put(username, user);
     }
 
-    public void addUser(Usuario user) {
+    public void addUser(User user) {
         users.put(user.getUsername(), user);
     }
 
-    public Collection<Usuario> userCollection() {
-        Collection<Usuario> aux = users.values();
+    public Collection<User> userCollection() {
+        Collection<User> aux = users.values();
         return aux;
     }
 
-    public Usuario unique(String username) {
-        Usuario aux = users.get(username);
+    public User unique(String username) {
+        User aux = users.get(username);
         if (aux != null) {
             return aux;
         } else {
@@ -33,7 +34,7 @@ public class UserHolder {
         }
     }
 
-    public Usuario delete(String username) {
+    public User delete(String username) {
 
         return users.remove(username);
 

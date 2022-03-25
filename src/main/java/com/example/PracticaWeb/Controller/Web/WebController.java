@@ -1,11 +1,13 @@
-package com.example.PracticaWeb;
+package com.example.PracticaWeb.Controller.Web;
 
 
+import com.example.PracticaWeb.Entity.Event;
+import com.example.PracticaWeb.Entity.Ticket;
+import com.example.PracticaWeb.EventHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -30,11 +32,11 @@ public class WebController {
 
     }
     @PostMapping("/events/new")
-    public String newEvent(Model model,Evento evento){
-        Evento aux = eventHolder.unique(evento.getCod());
+    public String newEvent(Model model, Event event){
+        Event aux = eventHolder.unique(event.getCod());
         if (aux == null) {
-            eventHolder.addEvent(evento);
-            model.addAttribute("evento",eventHolder.unique(evento.getCod()));
+            eventHolder.addEvent(event);
+            model.addAttribute("evento",eventHolder.unique(event.getCod()));
             return "evento";
         } else {
             return "error";
@@ -42,7 +44,7 @@ public class WebController {
     }
 
     @PostMapping("/events/update")
-    public String updateEvent(Model model,Evento e){
+    public String updateEvent(Model model, Event e){
         eventHolder.switchinTickets(e.getCod(),e);
         eventHolder.addEvent(e);
         model.addAttribute("evento",eventHolder.unique(e.getCod()));
@@ -50,7 +52,7 @@ public class WebController {
     }
 
     @PostMapping("/events/delete")
-    public String deleteEvent(Model model,Evento e){
+    public String deleteEvent(Model model, Event e){
         eventHolder.remove(e.getCod());
         model.addAttribute("anuncios",eventHolder.eventoCollection());
         return "tablon";
@@ -58,22 +60,22 @@ public class WebController {
 
     //TICKET CONTROLLERS//
     @PostMapping("/events/{cod}/newTicket")
-    public String newTicket(Model model,@PathVariable String cod,Entrada e){
+    public String newTicket(Model model, @PathVariable String cod, Ticket e){
         model.addAttribute("evento",eventHolder.unique(cod));
         model.addAttribute("ticket",eventHolder.addTicket(cod,e));
         return "showticket";
     }
 
     @PostMapping("/events/{cod}/checkTicket")
-    public String searchTicket(Model model, @PathVariable String cod,Entrada e){
-        Entrada aux = eventHolder.getTicket(cod,e.getId());
+    public String searchTicket(Model model, @PathVariable String cod, Ticket e){
+        //Ticket aux = eventHolder.getTicket(cod,e.getId());
         model.addAttribute("evento",eventHolder.unique(cod));
-        model.addAttribute("ticket",eventHolder.getTicket(cod,aux.getId()));
-        if(aux!=null){
+        //model.addAttribute("ticket",eventHolder.getTicket(cod,aux.getId()));
+        /*if(aux!=null){
             return "showticket";
         }else{
             return "error";
-        }
+        }*/
     }
 
     //ERROR DEFAULT PAGE//

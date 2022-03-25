@@ -1,6 +1,8 @@
 package com.example.PracticaWeb;
 
 
+import com.example.PracticaWeb.Entity.Event;
+import com.example.PracticaWeb.Entity.Ticket;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -10,62 +12,62 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class EventHolder {
 
-    private Map<String,Evento> events = new ConcurrentHashMap<>();
+
+    private Map<String, Event> events = new ConcurrentHashMap<>();
 
 
-    public void addEvent(Evento e){
+    public void addEvent(Event e){
         events.put(e.getCod(),e);
     }
-    public void addEvent(Evento e,String cod){
+    public void addEvent(Event e, String cod){
         events.put(cod,e);
     }
-    public Entrada addTicket(String cod,Entrada e){
-        Evento aux=events.get(cod);
-        Entrada t;
+    public Ticket addTicket(String cod, Ticket e){
+        Event aux=events.get(cod);
+        Ticket t;
         if (aux!=null){
-           t = events.get(cod).addTicket(e);
+
         }else{
             t=null;
         }
         return t;
     }
 
-    public Collection<Evento> eventoCollection(){
-        Collection<Evento> aux=events.values();
+    public Collection<Event> eventoCollection(){
+        Collection<Event> aux=events.values();
         return aux;
     }
 
-    public Evento unique(String cod){
-        Evento aux=events.get(cod);
+    public Event unique(String cod){
+        Event aux=events.get(cod);
         if (aux!=null){
             return aux;
         }else{
             return null;
         }
     }
-    public Evento remove(String cod){
+    public Event remove(String cod){
         return events.remove(cod);
     }
 
-    public Evento switchinTickets(String cod,Evento e){
+    public Event switchinTickets(String cod, Event e){
         if (events.get(cod)!=null){
             e.setSold(events.get(cod).getSold());
         }
         return e;
     }
-    public Entrada getTicket(String cod,String id){
-        Entrada t;
+    public Ticket getTicket(String cod, String id){
+        Ticket t;
         if (events.get(cod)!=null){
-            t = events.get(cod).getTicket(id);
+
         }else{
             t=null;
         }
         return t;
     }
 
-    public Collection<Entrada> alltickets(String cod){
+    public Collection<Ticket> alltickets(String cod){
         if(events.get(cod)!=null){
-            Collection<Entrada> aux =events.get(cod).getSold().values();
             return aux;
         }
         return null;
