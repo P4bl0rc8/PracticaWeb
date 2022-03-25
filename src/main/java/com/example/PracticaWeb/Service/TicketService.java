@@ -19,15 +19,16 @@ public class TicketService {
 
     //CHECK IF EXISTS
     public Optional<Ticket> existsById(Integer id){
-        var aux = ticketRepository.findTicketbyId(id);
+        var aux = ticketRepository.findTicketByid(id);
         return aux;
 
     }
+    /*
     public boolean existsByUsername(String username){
-        List<Ticket> aux = ticketRepository.findTicketsByUsername(username);
+        List<Ticket> aux = ticketRepository.findTicketsByUser(username);
         return aux.isEmpty();
 
-    }
+    }*/
     public boolean existsByUser(User user){
         List<Ticket> aux = ticketRepository.findTicketsByUser(user.getId());
         return aux.isEmpty();
@@ -40,7 +41,7 @@ public class TicketService {
 
     }
     public Optional<Ticket> deleteTicket(Integer id){
-        Optional<Ticket> aux = ticketRepository.findTicketbyId(id);
+        Optional<Ticket> aux = ticketRepository.findTicketByid(id);
         if(aux.isPresent()){
             ticketRepository.delete(aux.get());
         }
@@ -48,17 +49,18 @@ public class TicketService {
 
     }
     public Optional<Ticket> returnTicket(Integer id){
-        return ticketRepository.findTicketbyId(id);
+        return ticketRepository.findTicketByid(id);
 
     }
     public Collection<Ticket> returnAllUserTickets(User user){
         return ticketRepository.findTicketsByUser(user.getId());
 
     }
+    /*
     public Collection<Ticket> returnAllUsernameTickets(User user){
         return ticketRepository.findTicketsByUsername(user.getUsername());
 
-    }
+    }*/
     public Collection<Ticket> returnSoldTickets(Event event){
         return ticketRepository.findTicketsByEvent(event.getId());
 

@@ -1,4 +1,4 @@
-package com.example.PracticaWeb.Controller.Web;
+/*package com.example.PracticaWeb.Controller.Web;
 
 import com.example.PracticaWeb.Entity.User;
 import com.example.PracticaWeb.UserHolder;
@@ -64,3 +64,4 @@ public class WebUserControllers {
         else{return "error";}
     }
 }
+*/

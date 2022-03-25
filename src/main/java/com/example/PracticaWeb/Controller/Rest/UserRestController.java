@@ -1,8 +1,8 @@
-package com.example.PracticaWeb.Controller.Rest;
+/*package com.example.PracticaWeb.Controller.Rest;
 
 
 import com.example.PracticaWeb.Entity.User;
-import com.example.PracticaWeb.UserHolder;
+//import com.example.PracticaWeb.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,3 +76,4 @@ public class UserRestController {
     }
 
 }
+*/

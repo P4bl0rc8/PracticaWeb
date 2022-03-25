@@ -45,17 +45,17 @@
             <div class="col-lg-8 mx-auto">
                 <h2>Rellena el siguiente form</h2>
                 <form class="form-control" method="post" action="/events/new">
-                    <input class="bg-light form-control" type="text" name="nombre" placeholder="Nombre del event" />
+                    <input class="bg-light form-control" type="text" name="name" placeholder="Nombre del event" />
                     <input class="bg-light form-control" type="text" name="cod" placeholder="Código del event" />
-                    <input class="bg-light form-control" type="date" name="fecha" placeholder="dd/mm/yyy" />
-                    <select>
-                        <optgroup label="genero">
-                            <option value="techno" >Techno</option>
-                            <option value="reggaeton">Reggaeton</option>
-                            <option value="trap">Trap</option>
+                    <input class="bg-light form-control" type="date" name="date" placeholder="dd/mm/yyy" />
+                    <select name="gender">
+                        <optgroup label="gender">
+                            <option  value="techno" >Techno</option>
+                            <option  value="reggaeton">Reggaeton</option>
+                            <option  value="trap">Trap</option>
                         </optgroup>
                     </select>
-                    <textarea name="descripcion" id="descripcion" ></textarea>
+                    <textarea name="description" id="descripcion" ></textarea>
                     <script> CKEDITOR.replace( 'descripcion' );</script>
                     <button type="sumbit" class="btn btn-primary">Crear event</button><br></form>
             </div>
@@ -66,17 +66,17 @@
             <div class="col-lg-8 mx-auto">
                 <h2>Quieres actualizar un event?</h2>
                 <form class="form-control" method="post" action="/events/update">
-                    <input class="bg-light form-control" type="text" name="nombre" placeholder="Nombre del event" />
+                    <input class="bg-light form-control" type="text" name="name" placeholder="Nombre del event" />
                     <input class="bg-light form-control" type="text" name="cod" placeholder="Código del event" />
-                    <input class="bg-light form-control" type="date" name="fecha" placeholder="dd/mm/yyy" />
+                    <input class="bg-light form-control" type="date" name="date" placeholder="dd/mm/yyy" />
                     <select>
-                        <optgroup label="genero">
+                        <optgroup label="gender">
                             <option value="techno" >Techno</option>
                             <option value="reggaeton">Reggaeton</option>
                             <option value="trap">Trap</option>
                         </optgroup>
                     </select>
-                    <textarea name="descripcion" id="descripcion1" ></textarea>
+                    <textarea name="description" id="descripcion1" ></textarea>
                     <script> CKEDITOR.replace( 'descripcion1' );</script>
                     <button type="sumbit" class="btn btn-primary">Actualizar event</button><br></form>
             </div>

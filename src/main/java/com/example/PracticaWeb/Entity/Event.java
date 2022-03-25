@@ -30,13 +30,13 @@ public class Event {
     private String date;
     @Column(nullable = false)
     private String gender;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String description;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Ticket> soldTickets = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "eventsList", cascade = CascadeType.ALL)
     private List<User> eventAttendance = new ArrayList<>();
 
     /*

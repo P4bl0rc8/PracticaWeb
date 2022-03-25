@@ -1,4 +1,6 @@
+/*
 package com.example.PracticaWeb;
+
 
 
 import com.example.PracticaWeb.Entity.Event;
@@ -73,3 +75,4 @@ public class EventHolder {
         return null;
     }
 }
+*/

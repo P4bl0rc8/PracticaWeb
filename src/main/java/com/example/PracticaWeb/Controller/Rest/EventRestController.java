@@ -1,4 +1,4 @@
-package com.example.PracticaWeb.Controller.Rest;
+/*package com.example.PracticaWeb.Controller.Rest;
 
 
 
@@ -110,3 +110,4 @@ public class EventRestController {
 
 
 }
+*/
