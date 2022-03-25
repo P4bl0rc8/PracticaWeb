@@ -5,6 +5,8 @@ import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.Ticket;
 //import com.example.PracticaWeb.EventHolder;
 import com.example.PracticaWeb.Service.EventService;
+import com.example.PracticaWeb.Service.TicketService;
+import com.example.PracticaWeb.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,12 @@ import java.util.Optional;
 
 @Controller
 public class WebController {
-
+    @Autowired
+    TicketService ticketService;
     @Autowired
     EventService eventService;
+    @Autowired
+    UserService userService;
 
     //EVENT CONTROLLERS//
     @GetMapping("/events")
@@ -29,10 +34,13 @@ public class WebController {
 
     @GetMapping("/events/{cod}")
     public String uniqueEvent(Model model, @PathVariable String cod){
-
-        model.addAttribute("event",eventService.unique(cod));
-        return "evento";
-
+        if (eventService.unique(cod).isPresent()) {
+            model.addAttribute("event", eventService.unique(cod).get());
+            return "evento";
+        }
+        else{
+            return "error";
+        }
     }
     @PostMapping("/events/new")
     public String newEvent(Model model, Event event){
@@ -45,30 +53,40 @@ public class WebController {
             return "error";
         }
     }
-/*
+
     @PostMapping("/events/update")
     public String updateEvent(Model model, Event e){
-        eventHolder.switchinTickets(e.getCod(),e);
-        eventHolder.addEvent(e);
-        model.addAttribute("evento",eventHolder.unique(e.getCod()));
-        return "evento";
+        if(eventService.unique(e.getCod()).isPresent()) {
+            model.addAttribute("event",eventService.updateEvent(e));
+            return "evento";
+        }
+        else{
+            return "error";
+        }
     }
-
+/*
     @PostMapping("/events/delete")
     public String deleteEvent(Model model, Event e){
         eventHolder.remove(e.getCod());
         model.addAttribute("anuncios",eventHolder.eventoCollection());
         return "tablon";
     }
-
+*/
     //TICKET CONTROLLERS//
     @PostMapping("/events/{cod}/newTicket")
     public String newTicket(Model model, @PathVariable String cod, Ticket e){
-        model.addAttribute("evento",eventHolder.unique(cod));
-        model.addAttribute("ticket",eventHolder.addTicket(cod,e));
-        return "showticket";
+        if (eventService.addTicket(cod,e)!=null&&userService.existsUserByEmail(e.getDatos()).isPresent()) {
+            model.addAttribute("event", eventService.unique(cod).get());
+            e.setEvent(eventService.unique(cod).get());
+            e.setUser(userService.existsUserByEmail(e.getDatos()).get());
+            model.addAttribute("ticket", ticketService.addTicket(e));
+            return "showticket";
+        }
+        else{
+            return "error";
+        }
     }
-
+/*
     @PostMapping("/events/{cod}/checkTicket")
     public String searchTicket(Model model, @PathVariable String cod, Ticket e){
         //Ticket aux = eventHolder.getTicket(cod,e.getId());
