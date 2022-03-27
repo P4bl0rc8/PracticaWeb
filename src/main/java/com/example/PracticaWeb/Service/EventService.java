@@ -4,6 +4,7 @@ import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.Ticket;
 import com.example.PracticaWeb.Repository.EventRepository;
 import com.example.PracticaWeb.Repository.TicketRepository;
+import com.example.PracticaWeb.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ public class EventService {
     EventRepository eventRepository;
     @Autowired
     TicketRepository ticketRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public void addEvent(Event e){
         eventRepository.save(e);
@@ -27,7 +30,10 @@ public class EventService {
             List<Ticket> aux2=aux.get().getSoldTickets();
             e.setSoldTickets(aux2);
             eventRepository.delete(aux.get());
+            ticketRepository.saveAll(aux2);
+
             eventRepository.save(e);
+
             eventRepository.findEventById(e.getId()).get().setId(aux.get().getId());
             return e;
         }

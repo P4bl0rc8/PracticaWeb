@@ -29,11 +29,12 @@ public class TicketService {
         return aux.isEmpty();
 
     }*/
+    /*
     public boolean existsByUser(User user){
         List<Ticket> aux = ticketRepository.findTicketsByUser(user.getId());
         return aux.isEmpty();
 
-    }
+    }*/
 
     //FUNCTIONALITY
     public Ticket addTicket(Ticket ticket){
@@ -52,15 +53,16 @@ public class TicketService {
         return ticketRepository.findTicketByid(id);
 
     }
+    /*
     public Collection<Ticket> returnAllUserTickets(User user){
         return ticketRepository.findTicketsByUser(user.getId());
 
     }
-    /*
+
     public Collection<Ticket> returnAllUsernameTickets(User user){
         return ticketRepository.findTicketsByUsername(user.getUsername());
 
-    }*/
+    }
     public Collection<Ticket> returnSoldTickets(Event event){
         return ticketRepository.findTicketsByEvent(event.getId());
 
@@ -68,5 +70,5 @@ public class TicketService {
     public Collection<Ticket> returnAllSoldTickets(){
         return ticketRepository.findAll();
 
-    }
+    }*/
 }

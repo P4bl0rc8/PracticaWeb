@@ -28,8 +28,14 @@ public class User {
     @ManyToMany
     private List<Event> eventsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Ticket> ticketsList = new ArrayList<>();
+
+    public User(String username, String email, String pass) {
+        this.username=username;
+        this.email=email;
+        this.password=pass;
+    }
 
     //GETTERS && SETTERS
     public void setUsername(String username) {

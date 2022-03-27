@@ -3,6 +3,7 @@ package com.example.PracticaWeb.Service;
 
 import com.example.PracticaWeb.Entity.Ticket;
 import com.example.PracticaWeb.Entity.User;
+import com.example.PracticaWeb.Repository.EventRepository;
 import com.example.PracticaWeb.Repository.TicketRepository;
 import com.example.PracticaWeb.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +20,20 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     TicketRepository ticketRepository;
-
+    @Autowired
+    EventRepository eventRepository;
     //CHECK IF EXISTS
     //SE PUEDE HACER QUE DEVUELVA BOOLEAN TB, COMO PREFIRAIS//
     public Optional<User> existsUserById(long id){
-        var aux = userRepository.findUserById(id);
-        return aux;
+        return userRepository.findUserById(id);
 
     }
     public Optional<User> existsUserByUsername(String username){
-        var aux = userRepository.findUserByUsername(username);
-        return aux;
+        return userRepository.findUserByUsername(username);
 
     }
     public Optional<User> existsUserByEmail(String email){
-        var aux = userRepository.findUserByEmail(email);
-        return aux;
+        return userRepository.findUserByEmail(email);
 
     }
 
@@ -77,9 +76,10 @@ public class UserService {
         }
 
     }
+    /*
     public Ticket returnLastBought(User user){
         List<Ticket> list = ticketRepository.findTicketsByUser(user.getId());
         return list.get(list.size()-1);
 
-    }
+    }*/
 }

@@ -33,7 +33,7 @@ public class Event {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Ticket> soldTickets = new ArrayList<>();
 
     @ManyToMany(mappedBy = "eventsList", cascade = CascadeType.ALL)

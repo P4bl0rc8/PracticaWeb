@@ -1,20 +1,29 @@
-/*package com.example.PracticaWeb.Controller.Web;
+package com.example.PracticaWeb.Controller.Web;
 
 import com.example.PracticaWeb.Entity.User;
-import com.example.PracticaWeb.UserHolder;
+import com.example.PracticaWeb.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 
 @Controller
 public class WebUserControllers {
 
     @Autowired
-    UserHolder userHolder;
+    UserService userService;
 
-    //USER CONTROLLERS//
+    @PostConstruct
+    public void init(){
+        User u = new User("pepe","pepe@gmail.com","pass123");
+        userService.addUser(u);
+    }
+
+/*
     @PostMapping("/users/new")
     public String newUser(Model model, User u){
         User aux = userHolder.unique(u.getUsername());
@@ -62,6 +71,5 @@ public class WebUserControllers {
             return "checkuser";
         }
         else{return "error";}
-    }
+    }*/
 }
-*/

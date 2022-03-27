@@ -75,11 +75,15 @@ public class WebController {
     //TICKET CONTROLLERS//
     @PostMapping("/events/{cod}/newTicket")
     public String newTicket(Model model, @PathVariable String cod, Ticket e){
-        if (eventService.addTicket(cod,e)!=null&&userService.existsUserByEmail(e.getDatos()).isPresent()) {
-            model.addAttribute("event", eventService.unique(cod).get());
-            e.setEvent(eventService.unique(cod).get());
-            e.setUser(userService.existsUserByEmail(e.getDatos()).get());
-            model.addAttribute("ticket", ticketService.addTicket(e));
+        if (eventService.addTicket(cod,e)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByEmail(e.getDatos()).isPresent()) {
+            ticketService.addTicket(e);
+            eventService.unique(cod).get().getSoldTickets().add(e);
+            eventService.unique(cod).get().getEventAttendance().add(userService.existsUserByEmail(e.getDatos()).get());
+            userService.existsUserByEmail(e.getDatos()).get().getTicketsList().add(e);
+            //eventService.unique(cod).get().getEventAttendance().add(userService.existsUserByEmail(e.getDatos()).get());
+            //userService.existsUserByEmail(e.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
+            model.addAttribute("event",eventService.unique(cod).get());
+            model.addAttribute("ticket",e);
             return "showticket";
         }
         else{

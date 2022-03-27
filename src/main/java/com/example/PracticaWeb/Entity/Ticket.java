@@ -24,11 +24,7 @@ public class Ticket {
     @Column(nullable = false)
     private String datos;
 
-    @ManyToOne
-    private Event event;
 
-    @ManyToOne
-    private User user;
 
     public Ticket(String datos){ this.datos=datos;}
 
@@ -41,21 +37,7 @@ public class Ticket {
         this.datos = datos;
     }
 
-    public Event getEvent() {
-        return event;
-    }
 
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public long getId() {
         return this.id;
