@@ -36,7 +36,7 @@ public class Event {
     @OneToMany
     private List<Ticket> soldTickets = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "eventsList", cascade = CascadeType.ALL)
+    @ManyToMany
     private List<User> eventAttendance = new ArrayList<>();
 
     /*

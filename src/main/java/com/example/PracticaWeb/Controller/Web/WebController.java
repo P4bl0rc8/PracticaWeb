@@ -76,12 +76,10 @@ public class WebController {
     @PostMapping("/events/{cod}/newTicket")
     public String newTicket(Model model, @PathVariable String cod, Ticket e){
         if (eventService.addTicket(cod,e)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByEmail(e.getDatos()).isPresent()) {
-            ticketService.addTicket(e);
-            eventService.unique(cod).get().getSoldTickets().add(e);
-            eventService.unique(cod).get().getEventAttendance().add(userService.existsUserByEmail(e.getDatos()).get());
             userService.existsUserByEmail(e.getDatos()).get().getTicketsList().add(e);
-            //eventService.unique(cod).get().getEventAttendance().add(userService.existsUserByEmail(e.getDatos()).get());
-            //userService.existsUserByEmail(e.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
+            eventService.unique(cod).get().getEventAttendance().add(userService.existsUserByEmail(e.getDatos()).get());
+            userService.existsUserByEmail(e.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
+            ticketService.addTicket(e);
             model.addAttribute("event",eventService.unique(cod).get());
             model.addAttribute("ticket",e);
             return "showticket";
