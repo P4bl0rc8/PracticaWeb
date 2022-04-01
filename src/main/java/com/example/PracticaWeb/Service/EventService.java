@@ -27,15 +27,12 @@ public class EventService {
     public Event updateEvent(Event e){
         Optional<Event> aux = eventRepository.findEventByCod(e.getCod());
         if (aux.isPresent()){
-            List<Ticket> aux2=aux.get().getSoldTickets();
-            e.setSoldTickets(aux2);
-            eventRepository.delete(aux.get());
-            ticketRepository.saveAll(aux2);
-
-            eventRepository.save(e);
-
-            eventRepository.findEventById(e.getId()).get().setId(aux.get().getId());
-            return e;
+           aux.get().setDate(e.getDate());
+           aux.get().setDescription(e.getDescription());
+           aux.get().setGender(e.getGender());
+           aux.get().setName(e.getName());
+            eventRepository.save(aux.get());
+            return aux.get();
         }
         else{
             return null;

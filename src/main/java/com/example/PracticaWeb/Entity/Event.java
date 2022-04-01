@@ -33,11 +33,10 @@ public class Event {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Ticket> soldTickets = new ArrayList<>();
 
-    @ManyToMany
-    private List<User> eventAttendance = new ArrayList<>();
+
 
     /*
     private static long cont=0;
@@ -112,9 +111,6 @@ public class Event {
         this.soldTickets = sold;
     }
 
-    public List<User> getAttendance(){
-        return this.eventAttendance;
-    }
 
     public long getId(){
         return this.id;
