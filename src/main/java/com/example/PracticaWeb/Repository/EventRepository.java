@@ -15,4 +15,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     public List<Event> findEventByDate(String date);
     public List<Event> findEventByGender(String gender);
     public List<Ticket> findTicketsByName(Event event);
+
+
 }

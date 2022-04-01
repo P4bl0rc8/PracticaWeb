@@ -2,6 +2,7 @@ package com.example.PracticaWeb.Service;
 
 import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.Ticket;
+import com.example.PracticaWeb.Entity.User;
 import com.example.PracticaWeb.Repository.EventRepository;
 import com.example.PracticaWeb.Repository.TicketRepository;
 import com.example.PracticaWeb.Repository.UserRepository;
@@ -45,6 +46,24 @@ public class EventService {
         }
         else{
             return null;
+        }
+    }
+    public boolean deleteEvent(String cod){
+        if (eventRepository.findEventByCod(cod).isPresent()){
+            Event e=eventRepository.findEventByCod(cod).get();
+            //DESVINCULAR ENTRADASYEVENTO-DEL USER
+            List<Ticket> aux=e.getSoldTickets();
+            List<User> aux2=userRepository.findAll();
+            for (User u: aux2){
+                u.getTicketsList().removeIf(aux::contains);
+                u.getEventsList().remove(e);
+                userRepository.save(u);
+            }
+            eventRepository.delete(e);
+            return true;
+        }
+        else{
+            return false;
         }
     }
     public Collection<Event> findAll(){

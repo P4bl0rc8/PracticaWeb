@@ -64,14 +64,16 @@ public class WebController {
             return "error";
         }
     }
-/*
     @PostMapping("/events/delete")
     public String deleteEvent(Model model, Event e){
-        eventHolder.remove(e.getCod());
-        model.addAttribute("anuncios",eventHolder.eventoCollection());
-        return "tablon";
+        if (eventService.deleteEvent(e.getCod())){
+        model.addAttribute("anuncios",eventService.findAll());
+        return "tablon";}
+        else{
+            return "error";
+        }
     }
-*/
+
     //TICKET CONTROLLERS//
     @PostMapping("/events/{cod}/newTicket")
     public String newTicket(Model model, @PathVariable String cod, Ticket e){
@@ -87,17 +89,10 @@ public class WebController {
             return "error";
         }
     }
-/*
+
     @PostMapping("/events/{cod}/checkTicket")
     public String searchTicket(Model model, @PathVariable String cod, Ticket e){
-        //Ticket aux = eventHolder.getTicket(cod,e.getId());
-        model.addAttribute("evento",eventHolder.unique(cod));
-        //model.addAttribute("ticket",eventHolder.getTicket(cod,aux.getId()));
-        /*if(aux!=null){
-            return "showticket";
-        }else{
-            return "error";
-        }
+        
     }
 
     //ERROR DEFAULT PAGE//
@@ -105,6 +100,4 @@ public class WebController {
     public String errorMapping(Model model){
         return "error";
     }
-
-*/
 }

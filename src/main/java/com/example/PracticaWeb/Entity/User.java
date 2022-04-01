@@ -28,7 +28,7 @@ public class User {
     @ManyToMany
     private List<Event> eventsList = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Ticket> ticketsList = new ArrayList<>();
 
     public User(String username, String email, String pass) {
