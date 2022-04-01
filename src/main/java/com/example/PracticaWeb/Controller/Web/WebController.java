@@ -92,7 +92,14 @@ public class WebController {
 
     @PostMapping("/events/{cod}/checkTicket")
     public String searchTicket(Model model, @PathVariable String cod, Ticket e){
-        
+     if (ticketService.returnTicket((int) e.getId()).isPresent()&&eventService.unique(cod).isPresent()){
+         model.addAttribute("event",eventService.unique(cod).get());
+         model.addAttribute("ticket",ticketService.returnTicket((int) e.getId()).get());
+         return "showticket";
+     }
+     else{
+         return "error";
+     }
     }
 
     //ERROR DEFAULT PAGE//
