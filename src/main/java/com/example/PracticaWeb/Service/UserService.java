@@ -1,6 +1,7 @@
 package com.example.PracticaWeb.Service;
 
 
+import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.Ticket;
 import com.example.PracticaWeb.Entity.User;
 import com.example.PracticaWeb.Repository.EventRepository;
@@ -22,64 +23,79 @@ public class UserService {
     TicketRepository ticketRepository;
     @Autowired
     EventRepository eventRepository;
+
     //CHECK IF EXISTS
     //SE PUEDE HACER QUE DEVUELVA BOOLEAN TB, COMO PREFIRAIS//
-    public Optional<User> existsUserById(long id){
+    public Optional<User> existsUserById(long id) {
         return userRepository.findUserById(id);
 
     }
-    public Optional<User> existsUserByUsername(String username){
+
+    public Optional<User> existsUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
 
     }
-    public Optional<User> existsUserByEmail(String email){
+
+    public Optional<User> existsUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
 
     }
 
-    //FUNCTIONALITY USERS
-    public User addUser(User user){
+    //FUNCTIONALITY USERS//
+    public User addUser(User user) {
         return userRepository.save(user);
 
     }
 
-    public Optional<User> deleteUser(long id){
-        var aux = userRepository.findUserById(id);
-        if(aux.isPresent()){
-            userRepository.delete(aux.get());
-        }
-        return aux;
 
+    public User deleteUser(String username){
+
+        if(userRepository.findUserByUsername(username).isPresent()){
+            User aux = userRepository.findUserByUsername(username).get();
+            //UNLINK TICKET/USER FROM EVENT
+            List<Ticket> auxlist = aux.getTicketsList();
+            List<Event> auxEvent = eventRepository.findAll();
+            for(Event event : auxEvent){
+                event.getSoldTickets().removeIf(auxlist::contains);
+                eventRepository.save(event);
+            }
+            userRepository.delete(aux);
+
+            return aux;
+        }
+        else{
+            return null;
+        }
     }
-    public Optional<User> returnUser(long id){
+
+    public Optional<User> returnUser(long id) {
         return userRepository.findUserById(id);
 
     }
-    public Collection<User> returnAllUsers(){
+
+    public Collection<User> returnAllUsers() {
         return userRepository.findAll();
 
     }
 
-
-    //FUNCTIONALITY TICKETS
-    public Collection<Ticket> addTicketToUser(Ticket ticket, long id){
-        Optional<User> aux = userRepository.findUserById(id);
-        if(aux.isPresent()){
-            var aux1 = aux.get();
-            List<Ticket> ticketsList = aux1.getTicketsList();
-            ticketsList.add(ticket);
-            aux1.setTicketsList(ticketsList);
-            userRepository.save(aux1);
-            return ticketsList;
-        }else{
-            return null;
-        }
-
-    }
     /*
     public Ticket returnLastBought(User user){
         List<Ticket> list = ticketRepository.findTicketsByUser(user.getId());
         return list.get(list.size()-1);
 
     }*/
+
+    public User updateUser(User user){
+
+        Optional<User> aux = userRepository.findUserByUsername(user.getUsername());
+        if(aux.isPresent()){
+            aux.get().setUsername(user.getUsername());
+            aux.get().setEmail(user.getEmail());
+            aux.get().setPassword(user.getPassword());
+            userRepository.save(aux.get());
+            return aux.get();
+        }else{
+            return null;
+        }
+    }
 }

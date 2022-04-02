@@ -22,6 +22,7 @@ public class EventService {
     @Autowired
     UserRepository userRepository;
 
+    //EVENT FUNCTIONALITY//
     public void addEvent(Event e){
         eventRepository.save(e);
     }
@@ -34,15 +35,6 @@ public class EventService {
            aux.get().setName(e.getName());
             eventRepository.save(aux.get());
             return aux.get();
-        }
-        else{
-            return null;
-        }
-    }
-    public Ticket addTicket(String cod,Ticket e){
-        if (eventRepository.findEventByCod(cod).isPresent()){
-            eventRepository.findEventByCod(cod).get().getSoldTickets().add(e);
-            return e;
         }
         else{
             return null;
@@ -72,5 +64,30 @@ public class EventService {
 
     public Optional<Event> unique(String cod){
         return eventRepository.findEventByCod(cod);
+    }
+
+    //TICKET FUNCTIONALITY//
+    public Ticket addTicket(String cod,Ticket e){
+        if (eventRepository.findEventByCod(cod).isPresent()){
+            eventRepository.findEventByCod(cod).get().getSoldTickets().add(e);
+            return e;
+        }
+        else{
+            return null;
+        }
+    }
+    public Optional<Ticket> getTicket(String cod, long ticket_id){
+        if(eventRepository.findEventByCod(cod).get().getSoldTickets().contains(ticketRepository.findTicketByid(ticket_id).get())){
+            return ticketRepository.findTicketByid(ticket_id);
+        }else{
+            return null;
+        }
+    }
+    public Collection<Ticket> allTickets(String cod){
+        if(eventRepository.findEventByCod(cod).isPresent()){
+            return eventRepository.findEventByCod(cod).get().getSoldTickets();
+        }else{
+            return null;
+        }
     }
 }

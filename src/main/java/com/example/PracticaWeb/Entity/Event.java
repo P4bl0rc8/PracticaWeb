@@ -95,7 +95,7 @@ public class Event {
         this.gender = gender;
     }
 
-    public String getDescripcion() {
+    public String getDescription() {
         return description;
     }
 
@@ -103,11 +103,11 @@ public class Event {
         this.description = description;
     }
 
-    public List<Ticket> getSold(){
+    public List<Ticket> getSoldTickets(){
         return this.soldTickets;
     }
 
-    public void setSold(List<Ticket> sold) {
+    public void setSoldTickets(List<Ticket> sold) {
         this.soldTickets = sold;
     }
 

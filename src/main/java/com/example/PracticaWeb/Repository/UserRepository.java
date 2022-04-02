@@ -1,5 +1,6 @@
 package com.example.PracticaWeb.Repository;
 
+import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

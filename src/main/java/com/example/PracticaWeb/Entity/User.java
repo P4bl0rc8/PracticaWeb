@@ -3,6 +3,8 @@ package com.example.PracticaWeb.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,11 @@ public class User {
     private String password;
 
     @ManyToMany
+    @JsonIgnore
     private List<Event> eventsList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Ticket> ticketsList = new ArrayList<>();
 
     public User(String username, String email, String pass) {
@@ -64,6 +68,11 @@ public class User {
 
     public long getId(){
         return this.id;
+    }
+
+    //EVENT FUNCTIONALITY//
+    public boolean attendEvent(Event event){
+        return this.eventsList.contains(event);
     }
 
 }
