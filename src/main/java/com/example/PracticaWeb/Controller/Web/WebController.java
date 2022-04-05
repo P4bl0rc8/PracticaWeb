@@ -7,6 +7,8 @@ import com.example.PracticaWeb.Entity.Ticket;
 import com.example.PracticaWeb.Service.EventService;
 import com.example.PracticaWeb.Service.TicketService;
 import com.example.PracticaWeb.Service.UserService;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +47,9 @@ public class WebController {
     @PostMapping("/events/new")
     public String newEvent(Model model, Event event){
         eventService.unique(event.getCod());
-        if (eventService.unique(event.getCod()).isEmpty()) {
+        if (eventService.unique(event.getCod()).isEmpty()){
+            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+            event.setDescription(policy.sanitize(event.getDescription()));
             eventService.addEvent(event);
             model.addAttribute("event",eventService.unique(event.getCod()).get());
             return "evento";
