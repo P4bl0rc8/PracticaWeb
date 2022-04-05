@@ -38,17 +38,15 @@ public class UserService {
 
     public Optional<User> existsUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
-
     }
 
     //FUNCTIONALITY USERS//
     public User addUser(User user) {
         return userRepository.save(user);
-
     }
 
 
-    public User deleteUser(String username){
+    public boolean deleteUser(String username){
 
         if(userRepository.findUserByUsername(username).isPresent()){
             User aux = userRepository.findUserByUsername(username).get();
@@ -57,14 +55,14 @@ public class UserService {
             List<Event> auxEvent = eventRepository.findAll();
             for(Event event : auxEvent){
                 event.getSoldTickets().removeIf(auxlist::contains);
+                aux.getEventsList().remove(event);
                 eventRepository.save(event);
             }
             userRepository.delete(aux);
-
-            return aux;
+            return true;
         }
         else{
-            return null;
+            return false;
         }
     }
 

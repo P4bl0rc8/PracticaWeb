@@ -35,7 +35,7 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> newUser(@RequestBody User user){
 
-        if (userService.existsUserById(user.getId()).isEmpty()) {
+        if (userService.existsUserByUsername(user.getUsername()).isEmpty()) {
             userService.addUser(user);
             return new ResponseEntity<>(userService.existsUserById(user.getId()).get(), HttpStatus.OK);
         } else {
@@ -65,9 +65,9 @@ public class UserRestController {
     public ResponseEntity<User> deleteUser(@PathVariable String username){
 
         if(userService.existsUserByUsername(username).isPresent()){
-            Optional<User> aux = userService.existsUserByUsername(username);
-            userService.deleteUser(aux.get().getUsername());
-            return new ResponseEntity<>(aux.get(), HttpStatus.OK);
+            User aux=userService.existsUserByUsername(username).get();
+            userService.deleteUser(username);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
