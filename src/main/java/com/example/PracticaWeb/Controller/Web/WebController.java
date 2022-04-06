@@ -93,7 +93,7 @@ public class WebController {
             return "error";
         }
     }
-    /*
+    
     @PostMapping("/events/{cod}/checkTicket")
     public String searchTicket(Model model, @PathVariable String cod, Ticket e){
      if (ticketService.returnTicket((int) e.getId()).isPresent()&&eventService.unique(cod).isPresent()){
@@ -105,7 +105,7 @@ public class WebController {
          return "error";
      }
     }
-    */
+
     //ERROR DEFAULT PAGE//
     @GetMapping("/error")
     public String errorMapping(Model model){

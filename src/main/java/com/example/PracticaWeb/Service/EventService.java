@@ -6,6 +6,8 @@ import com.example.PracticaWeb.Entity.User;
 import com.example.PracticaWeb.Repository.EventRepository;
 import com.example.PracticaWeb.Repository.TicketRepository;
 import com.example.PracticaWeb.Repository.UserRepository;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,8 @@ public class EventService {
         Optional<Event> aux = eventRepository.findEventByCod(e.getCod());
         if (aux.isPresent()){
            aux.get().setDate(e.getDate());
-           aux.get().setDescription(e.getDescription());
+            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+            aux.get().setDescription(policy.sanitize(e.getDescription()));
            aux.get().setGender(e.getGender());
            aux.get().setName(e.getName());
             eventRepository.save(aux.get());

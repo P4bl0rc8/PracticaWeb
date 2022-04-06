@@ -1,6 +1,8 @@
 package com.example.PracticaWeb.Controller.Rest;
 
 import com.example.PracticaWeb.Service.*;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ public class EventRestController{
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Event> newEvent (@RequestBody Event event){
         if (eventService.unique(event.getCod()).isEmpty()){
+            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+            event.setDescription(policy.sanitize(event.getDescription()));
             eventService.addEvent(event);
             return new ResponseEntity<>(event, HttpStatus.OK);
         } else {
