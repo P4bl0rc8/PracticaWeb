@@ -11,6 +11,9 @@ import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.swing.text.html.parser.Entity;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +26,8 @@ public class EventService {
     TicketRepository ticketRepository;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    EntityManager entityManager;
     //EVENT FUNCTIONALITY//
     public void addEvent(Event e){
         eventRepository.save(e);
@@ -92,5 +96,16 @@ public class EventService {
         }else{
             return null;
         }
+    }
+
+    public Collection<Event> dynamicquery(String name){
+        TypedQuery<Event> typedQuery= entityManager.createQuery("SELECT e FROM Event e where e.name=:name ",Event.class);
+        typedQuery.setParameter("name",name);
+        return typedQuery.getResultList();
+    }
+    public Collection<Event> dynamicquerygender(String gender){
+        TypedQuery<Event> typedQuery= entityManager.createQuery("SELECT e FROM Event e where e.gender=:gender ",Event.class);
+        typedQuery.setParameter("gender",gender);
+        return typedQuery.getResultList();
     }
 }

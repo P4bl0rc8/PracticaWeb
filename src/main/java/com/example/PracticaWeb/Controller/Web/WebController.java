@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.websocket.server.PathParam;
 import java.util.Optional;
 
 @Controller
@@ -26,7 +29,8 @@ public class WebController {
     EventService eventService;
     @Autowired
     UserService userService;
-
+    @Autowired
+    private EntityManager entityManager;
     //EVENT CONTROLLERS//
     @GetMapping("/events")
     public String tablon(Model model){
@@ -93,7 +97,7 @@ public class WebController {
             return "error";
         }
     }
-    
+
     @PostMapping("/events/{cod}/checkTicket")
     public String searchTicket(Model model, @PathVariable String cod, Ticket e){
      if (ticketService.returnTicket((int) e.getId()).isPresent()&&eventService.unique(cod).isPresent()){
@@ -111,4 +115,22 @@ public class WebController {
     public String errorMapping(Model model){
         return "error";
     }
+
+    ///BUSQUEDA DE EVENTOS
+    @GetMapping("/events/query/")
+    public String dynamicquery(Model model,String query){
+        model.addAttribute("anuncios",eventService.dynamicquery(query));
+        return "tablon";
+    }
+
+    @GetMapping("/events/querybygender/")
+    public String dynamicquerygender(Model model,String gender){
+        model.addAttribute("anuncios",eventService.dynamicquerygender(gender));
+        return "tablon";
+    }
+
+
+
+
+
 }

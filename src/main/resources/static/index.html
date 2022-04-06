@@ -65,7 +65,22 @@
             <h1>¿Te has perdido?</h1>
             <p>Si estás aquí es porque estás más desubicao que un bakala en el parking de masía</p>
             <p>Usa nuestro buscador anda...</p>
-
+            <form class="form-control" method="get" action="/events/query/"><input class="bg-light form-control" type="text" name="query" placeholder="Intenta recordar el nombre del evento..." />
+                <button type="sumbit" class="btn btn-primary">Encuentra la felicidad</button>
+            </form>
+            <br>
+            <p>Prefieres buscar por género?</p>
+            <form class="form-control" method="get" action="/events/querybygender/">
+                <select name="gender">
+                    <optgroup label="gender">
+                        <option  value="techno" >Techno</option>
+                        <option  value="reggaeton">Reggaeton</option>
+                        <option  value="trap">Trap</option>
+                    </optgroup>
+                </select>
+                <br>
+                <button type="sumbit" class="btn btn-primary">Encuentra la felicidad</button>
+            </form>
         </div>
     </div>
 </section>

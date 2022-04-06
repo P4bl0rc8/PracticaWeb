@@ -67,7 +67,7 @@ public class EventRestController{
     //UPDATE ONE EVENT ALREADY CREATED BUT IT DOESNT CHANGE SOLD TICKETS STRUCTURE//
     @PutMapping("/events/{cod}")
     public ResponseEntity<Event> updateEvent(@PathVariable String cod, @RequestBody Event updated){
-        if(eventService.unique(updated.getCod()).isPresent()){
+        if(eventService.unique(cod).isPresent()){
             eventService.updateEvent(updated);
             return new ResponseEntity<>(eventService.unique(cod).get(),HttpStatus.OK);
 

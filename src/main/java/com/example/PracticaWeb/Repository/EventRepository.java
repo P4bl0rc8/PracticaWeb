@@ -2,8 +2,10 @@ package com.example.PracticaWeb.Repository;
 
 import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.Ticket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
