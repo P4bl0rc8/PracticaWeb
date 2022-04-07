@@ -120,13 +120,13 @@ public class WebController {
     @GetMapping("/events/query/")
     public String dynamicquery(Model model,String query){
         model.addAttribute("anuncios",eventService.dynamicquery(query));
-        return "tablon";
+        return "searchresults";
     }
 
     @GetMapping("/events/querybygender/")
     public String dynamicquerygender(Model model,String gender){
         model.addAttribute("anuncios",eventService.dynamicquerygender(gender));
-        return "tablon";
+        return "searchresults";
     }
 
 
