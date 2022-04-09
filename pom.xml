@@ -63,7 +63,10 @@
 			<artifactId>html-types</artifactId>
 			<version>20211018.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
 	</dependencies>
 

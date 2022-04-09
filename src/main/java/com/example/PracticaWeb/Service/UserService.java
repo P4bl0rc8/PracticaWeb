@@ -8,6 +8,7 @@ import com.example.PracticaWeb.Repository.EventRepository;
 import com.example.PracticaWeb.Repository.TicketRepository;
 import com.example.PracticaWeb.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -42,6 +43,8 @@ public class UserService {
 
     //FUNCTIONALITY USERS//
     public User addUser(User user) {
+        BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -87,9 +90,10 @@ public class UserService {
 
         Optional<User> aux = userRepository.findUserByUsername(user.getUsername());
         if(aux.isPresent()){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             aux.get().setUsername(user.getUsername());
             aux.get().setEmail(user.getEmail());
-            aux.get().setPassword(user.getPassword());
+            aux.get().setPassword(encoder.encode(user.getPassword()));
             userRepository.save(aux.get());
             return aux.get();
         }else{
