@@ -35,7 +35,7 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> newUser(@RequestBody User user){
 
-        if (userService.existsUserByUsername(user.getUsername()).isEmpty()) {
+        if (userService.existsUserByUsername(user.getUsername()).isEmpty()&&userService.existsUserByEmail(user.getEmail()).isEmpty()) {
             userService.addUser(user);
             return new ResponseEntity<>(userService.existsUserById(user.getId()).get(), HttpStatus.OK);
         } else {

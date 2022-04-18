@@ -4,6 +4,7 @@ package com.example.PracticaWeb.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -102,11 +103,11 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    @JsonIgnore
     public List<Ticket> getSoldTickets(){
         return this.soldTickets;
     }
-
+    @JsonIgnore
     public void setSoldTickets(List<Ticket> sold) {
         this.soldTickets = sold;
     }

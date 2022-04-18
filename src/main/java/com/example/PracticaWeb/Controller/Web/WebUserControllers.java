@@ -18,17 +18,10 @@ public class WebUserControllers {
     @Autowired
     UserService userService;
 
-    @PostConstruct
-    public void init(){
-        User u = new User("pepe","pepe@gmail.com","pass123");
-        userService.addUser(u);
-    }
-
 
     @PostMapping("/users/new")
     public String newUser(Model model, User u){
-        Optional<User> aux= userService.existsUserByEmail(u.getEmail());
-        if (aux.isEmpty()){
+        if (userService.existsUserByUsername(u.getUsername()).isEmpty()&&userService.existsUserByEmail(u.getEmail()).isEmpty()){
             model.addAttribute("user",userService.addUser(u));
             return "showuser";
         } else {

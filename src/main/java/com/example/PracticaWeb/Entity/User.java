@@ -26,7 +26,6 @@ public class User {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
-    @JsonIgnore
     private String password;
 
     @ManyToMany
@@ -51,11 +50,11 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @JsonIgnore
     public String getPassword(){
         return password;
     }
@@ -70,6 +69,14 @@ public class User {
 
     public long getId(){
         return this.id;
+    }
+    @JsonIgnore
+    public List<Event> getEventsList() {
+        return eventsList;
+    }
+    @JsonIgnore
+    public List<Ticket> getTicketsList() {
+        return ticketsList;
     }
 
     //EVENT FUNCTIONALITY//
