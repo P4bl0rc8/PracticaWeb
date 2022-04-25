@@ -4,6 +4,7 @@ package com.example.PracticaWeb.Service;
 import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.Ticket;
 import com.example.PracticaWeb.Entity.User;
+import com.example.PracticaWeb.Enumerated.Role;
 import com.example.PracticaWeb.Repository.EventRepository;
 import com.example.PracticaWeb.Repository.TicketRepository;
 import com.example.PracticaWeb.Repository.UserRepository;
@@ -99,5 +100,14 @@ public class UserService {
         }else{
             return null;
         }
+    }
+
+    public Role hasRole(String user){
+        return userRepository.findUserByUsername(user).get().getRole();
+    }
+
+    public boolean equalsUser(User user, String username){
+        return user.getUsername().equals(username) && user.getPassword().equals(userRepository.findUserByUsername(username).get().getPassword())
+                && user.getEmail().equals(userRepository.findUserByUsername(username).get().getEmail()) && user.getAuthorities().equals(userRepository.findUserByUsername(username).get().getAuthorities());
     }
 }

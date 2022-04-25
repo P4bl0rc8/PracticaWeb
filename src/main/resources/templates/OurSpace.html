@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Nuestro Espacio</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="assets/bootstrap/css/Lightbox-Gallery.css">
-    <link rel="stylesheet" href="assets/bootstrap/css/Login-Form-Dark.css">
-</head>
+{{> head}}
 
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77">
 <nav class="navbar navbar-light navbar-expand-md fixed-top" id="mainNav">
-    <div class="container"><a class="navbar-brand" href="index.html">FAVRIK</a><button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu">
-        <i class="fa fa-bars"></i></button><a href="login.html"><i class="fa fa-user"></i></a>
+    <div class="container"><a class="navbar-brand" href="/index">FAVRIK</a><button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu">
+       </button><a href="/login"><i class="fa fa-user"></i></a>
+        </button><a href="/home"><i class="fa fa-home"></i></a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item nav-link"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item nav-link"><a class="nav-link" href="/index">Home</a></li>
                 <li class="nav-item nav-link"><a class="nav-link" href="/events">Eventos</a></li>
-                <li class="nav-item nav-link"><a class="nav-link" href="OurSpace.html">Our Space</a></li>
-                <li class="nav-item nav-link"><a class="nav-link" href="AboutUs.html">About US</a></li>
-                <li class="nav-item nav-link"><a class="nav-link" href="Contact.html">Contact</a></li>
+                <li class="nav-item nav-link"><a class="nav-link" href="/OurSpace">Our Space</a></li>
+                <li class="nav-item nav-link"><a class="nav-link" href="/AboutUs">About US</a></li>
+                <li class="nav-item nav-link"><a class="nav-link" href="/Contact">Contact</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<header class="masthead" style="background-image:url('/assets/img/fabrik-header2.jpg');">
+</body>
+<body>
+<header class="masthead" style="background-image:url('assets/img/fabrik-header2.jpg');">
     <div class="intro-body">
         <div class="container">
             <div class="row">
@@ -46,14 +38,14 @@
 <section class="text-center content-section" id="about">
     <div class="container">
         <div class="row photos" data-bss-baguettebox="">
-            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="assets/img/desk.jpg"><img class="img-fluid" src="assets/img/fabrik-header2.jpg"></a></div>
-            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="assets/img/building.jpg"><img class="img-fluid" src="assets/img/foto-favrik-1.jpeg"></a></div>
-            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="assets/img/loft.jpg"><img class="img-fluid" src="assets/img/foto-favrik-laser.jpg"></a></div>
-            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="assets/img/building.jpg"><img class="img-fluid" src="assets/img/foto-favrik-3.jpeg"></a></div>
-            <div class="col-sm-6 col-md-4 col-lg-3   item"><a href="assets/img/loft.jpg"><img class="img-fluid" src="assets/img/foto-favrik-4.jpeg"></a></div>
-            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="assets/img/desk.jpg"><img class="img-fluid" src="assets/img/header-fabrik.jpg"></a></div>
-            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="assets/img/loft.jpg"><img class="img-fluid" src="assets/img/foto-favrik-5.jpg"></a></div>
-            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="assets/img/desk.jpg"><img class="img-fluid" src="assets/img/header-bakano.jpeg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/desk.jpg"><img class="img-fluid" src="/assets/img/fabrik-header2.jpg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/building.jpg"><img class="img-fluid" src="/assets/img/foto-favrik-1.jpeg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/building.jpg"><img class="img-fluid" src="/assets/img/foto-favrik-3.jpeg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/loft.jpg"><img class="img-fluid" src="/assets/img/foto-favrik-4.jpeg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/desk.jpg"><img class="img-fluid" src="/assets/img/header-fabrik.jpg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/loft.jpg"><img class="img-fluid" src="/assets/img/foto-favrik-5.jpg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/desk.jpg"><img class="img-fluid" src="/assets/img/header-bakano.jpeg"></a></div>
+            <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/assets/img/loft.jpg"><img class="img-fluid" src="/assets/img/foto-favrik-laser.jpg"></a></div>
         </div>
     </div>
 </section>

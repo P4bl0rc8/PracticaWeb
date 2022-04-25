@@ -1,13 +1,18 @@
 package com.example.PracticaWeb.Entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.example.PracticaWeb.Enumerated.Role;
+import com.example.PracticaWeb.Security.Filter.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -20,7 +25,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @JsonInclude
     @Column(nullable = false)
     private String username;
     @Column(nullable = false)
@@ -29,32 +33,28 @@ public class User {
     private String password;
 
     @ManyToMany
-    @JsonIgnore
     private List<Event> eventsList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Ticket> ticketsList = new ArrayList<>();
 
-    public User(String username, String email, String pass) {
+    @Enumerated(EnumType.STRING)
+    private final Role role = Role.ROLE_USER;
+
+    public User(String username, String email, String pass, Role role) {
         this.username=username;
         this.email=email;
         this.password=pass;
+ 
     }
-
-    //GETTERS && SETTERS
-    public void setUsername(String username) {
+    public User(String username, String email, String pass){
         this.username = username;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
-    }
-    public void setPassword(String password) {
-        this.password = password;
+        this.password = pass;
     }
 
-    @JsonIgnore
+
+    //GETTERS//
     public String getPassword(){
         return password;
     }
@@ -70,13 +70,29 @@ public class User {
     public long getId(){
         return this.id;
     }
-    @JsonIgnore
+
     public List<Event> getEventsList() {
         return eventsList;
     }
-    @JsonIgnore
+
     public List<Ticket> getTicketsList() {
         return ticketsList;
+    }
+
+    public Role getRole(){ return this.role;}
+
+
+    //SETTERS//
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     //EVENT FUNCTIONALITY//
@@ -84,4 +100,9 @@ public class User {
         return this.eventsList.contains(event);
     }
 
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority(role.toString()));
+        return roles;
+    }
 }

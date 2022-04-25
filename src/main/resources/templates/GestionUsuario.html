@@ -1,35 +1,26 @@
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Gestion Usuarios</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
-</head>
+<!DOCTYPE html>
+<html>
+{{> head}}
 
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77">
 <nav class="navbar navbar-light navbar-expand-md fixed-top" id="mainNav">
-    <div class="container"><a class="navbar-brand" href="/index.html">FAVRIK</a><button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu">
-        <i class="fa fa-bars"></i></button><a href="login.html"><i class="fa fa-user"></i></a>
+    <div class="container"><a class="navbar-brand" href="/index">FAVRIK</a><button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu">
+        </button><a href="login.html"><i class="fa fa-user"></i></a>
+        </button><a href="/home"><i class="fa fa-home"></i></a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item nav-link"><a class="nav-link " href="/index.html">Home</a></li>
-                <li class="nav-item nav-link"><a class="nav-link " href="/events">Eventos</a></li>
-                <li class="nav-item nav-link"><a class="nav-link" href="OurSpace.html">Our Space</a></li>
-                <li class="nav-item nav-link"><a class="nav-link " href="AboutUs.html">About US</a></li>
-                <li class="nav-item nav-link"><a class="nav-link" href="Contact.html">Contact</a></li>
+                <li class="nav-item nav-link"><a class="nav-link " href="/home">Admin Page</a></li>
+                <li class="nav-item nav-link"><a class="nav-link " href="/GestionEvento">Gestion Eventos</a></li>
+
             </ul>
         </div>
     </div>
 </nav>
-<header class="masthead" style="background-image:url('/assets/img/fabrik-header2.jpg');">
+<header class="masthead" style="background-image:url('assets/img/fabrik-header2.jpg');">
     <div class="intro-body">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <h1 class="brand-heading">CREAR UN USUARIO</h1>
                     <p class="intro-text">¡Hola ADMIN, recuerda que aquí puedes crear nuevos usuarios!</p><a class="btn btn-link btn-circle" role="button" href="#eventform"><i class="fa fa-angle-double-down animated"></i></a>
                 </div>
             </div>
@@ -45,19 +36,19 @@
                     <input class="bg-light form-control" type="text" name="username" placeholder="Username" />
                     <input class="bg-light form-control" type="text" name="email" placeholder="E-mail" />
                     <input class="bg-light form-control" type="password" name="password" placeholder="Password" />
-                    <button type="sumbit" class="btn btn-primary">Crear usuario</button><br></form>
+                    <button type="sumbit" class="btn btn-primary">Create user</button><br></form>
             </div>
         </div>
     </div>
     <div class="container">
         <div class="row" >
             <div class="col-lg-8 mx-auto">
-                <h2>Actualiza un usuario</h2>
+                <h2>Actualiza Usuario</h2>
                 <form class="form-control" method="post" action="/users/update">
                     <input class="bg-light form-control" type="text" name="username" placeholder="Username" />
                     <input class="bg-light form-control" type="text" name="email" placeholder="E-mail" />
                     <input class="bg-light form-control" type="password" name="password" placeholder="Password" />
-                    <button type="sumbit" class="btn btn-primary">Actualizar usuario</button><br>
+                    <button type="sumbit" class="btn btn-primary">Update User</button><br>
                 </form>
             </div>
         </div>
@@ -68,7 +59,7 @@
                 <h2>Elimina un usuario</h2>
                 <form class="form-control" method="post" action="/users/delete">
                     <input class="bg-light form-control" type="text" name="username" placeholder="Username" />
-                    <button type="sumbit" class="btn btn-primary">Eliminar usuario</button><br>
+                    <button type="sumbit" class="btn btn-primary">Delete usuar</button><br>
                 </form>
             </div>
         </div>
@@ -91,8 +82,8 @@
         <p>Copyright ©&nbsp;Favrik 2022</p>
     </div>
 </footer>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/grayscale.js"></script>
+<script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../static/assets/js/grayscale.js"></script>
 </body>
 
 </html>

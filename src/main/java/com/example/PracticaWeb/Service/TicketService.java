@@ -18,7 +18,7 @@ public class TicketService {
     TicketRepository ticketRepository;
 
     //CHECK IF EXISTS
-    public Optional<Ticket> existsById(Integer id){
+    public Optional<Ticket> existsById(long id){
         var aux = ticketRepository.findTicketByid(id);
         return aux;
 
@@ -41,7 +41,7 @@ public class TicketService {
         return ticketRepository.save(ticket);
 
     }
-    public Optional<Ticket> deleteTicket(Integer id){
+    public Optional<Ticket> deleteTicket(long id){
         Optional<Ticket> aux = ticketRepository.findTicketByid(id);
         if(aux.isPresent()){
             ticketRepository.delete(aux.get());
@@ -49,7 +49,7 @@ public class TicketService {
         return aux;
 
     }
-    public Optional<Ticket> returnTicket(Integer id){
+    public Optional<Ticket> returnTicket(long id){
         return ticketRepository.findTicketByid(id);
 
     }

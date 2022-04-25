@@ -1,6 +1,8 @@
 package com.example.PracticaWeb.Entity;
 
 
+import com.example.PracticaWeb.Security.Filter.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,23 +23,37 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.Admin.class)
     private long id;
 
     @Column(nullable = false)
+    @JsonView(View.User.class)
     private String name;
     @Column(nullable = false)
+    @JsonView(View.User.class)
     private String cod;
     @Column(nullable = false)
+    @JsonView(View.User.class)
     private String date;
     @Column(nullable = false)
+    @JsonView(View.User.class)
     private String gender;
     @Column(nullable = false)
+    @JsonView(View.User.class)
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonView(View.Admin.class)
     private List<Ticket> soldTickets = new ArrayList<>();
 
 
+    public Event (String name, String cod, String date, String gender, String description){
+        this.name = name;
+        this.cod = cod;
+        this.date = date;
+        this.gender = gender;
+        this.description = description;
+    }
 
     /*
     private static long cont=0;

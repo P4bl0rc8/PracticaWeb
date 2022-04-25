@@ -5,9 +5,11 @@ import com.example.PracticaWeb.Entity.Event;
 import com.example.PracticaWeb.Entity.Ticket;
 import com.example.PracticaWeb.Entity.User;
 //import com.example.PracticaWeb.UserHolder;
+import com.example.PracticaWeb.Security.Filter.View;
 import com.example.PracticaWeb.Service.EventService;
 import com.example.PracticaWeb.Service.TicketService;
 import com.example.PracticaWeb.Service.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +32,11 @@ public class UserRestController {
     @Autowired
     TicketService ticketService;
 
+
     //CREATE USER//
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
+    @JsonView(View.User.class)
     public ResponseEntity<User> newUser(@RequestBody User user){
 
         if (userService.existsUserByUsername(user.getUsername()).isEmpty()&&userService.existsUserByEmail(user.getEmail()).isEmpty()) {
@@ -65,7 +69,7 @@ public class UserRestController {
     public ResponseEntity<User> deleteUser(@PathVariable String username){
 
         if(userService.existsUserByUsername(username).isPresent()){
-            User aux=userService.existsUserByUsername(username).get();
+            User aux = userService.existsUserByUsername(username).get();
             userService.deleteUser(username);
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
