@@ -50,9 +50,8 @@ public class EventService {
     public boolean deleteEvent(String cod){
         if (eventRepository.findEventByCod(cod).isPresent()){
             Event e=eventRepository.findEventByCod(cod).get();
-            //DESVINCULAR ENTRADASYEVENTO-DEL USER
             List<Ticket> aux=e.getSoldTickets();
-            List<User> aux2=userRepository.findAll();
+            List<User> aux2=userRepository.findAllByEventsListContains(e);
             for (User u: aux2){
                 u.getTicketsList().removeIf(aux::contains);
                 u.getEventsList().remove(e);
@@ -96,6 +95,10 @@ public class EventService {
         }else{
             return null;
         }
+    }
+
+    public Optional<Event> findbyticket(Ticket e){
+        return eventRepository.findEventBySoldTicketsContains(e);
     }
 
     public Collection<Event> dynamicquery(String name){

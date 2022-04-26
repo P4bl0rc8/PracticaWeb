@@ -53,6 +53,9 @@ public class TicketService {
         return ticketRepository.findTicketByid(id);
 
     }
+    public Optional<Ticket> alreadyExist(String datos){
+        return ticketRepository.findTicketByDatos(datos);
+    }
     /*
     public Collection<Ticket> returnAllUserTickets(User user){
         return ticketRepository.findTicketsByUser(user.getId());

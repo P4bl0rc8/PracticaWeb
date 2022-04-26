@@ -47,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
          //USER PAGES//
          http
+
                  .authorizeRequests()
                  .antMatchers("/events/{cod}/newTicket", "/events/{cod}/checkTicket", "/events/query/"
                          ,"/events/querybygender/", "/users/update", "/users/delete", "/users/view")
@@ -55,9 +56,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          //ADMIN PAGES//
          http
                  .authorizeRequests()
-                 .antMatchers("/GestionEvento", "/GestionUsuario", "/events/new", "/events/update", "/events/delete")
+                 .antMatchers( "/GestionEvento", "/GestionUsuario", "/events/new", "/events/update", "/events/delete")
                  .hasRole("ADMIN");
-
+         http.authorizeRequests().antMatchers(HttpMethod.POST,"/events/new").hasAnyRole("ADMIN","USER");
 
         //LOGIN & LOGOUT//
          http

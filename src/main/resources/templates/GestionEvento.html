@@ -45,6 +45,7 @@
                     </select>
                     <textarea name="description" id="descripcion" ></textarea>
                     <script> CKEDITOR.replace( 'descripcion' );</script>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button type="sumbit" class="btn btn-primary">Create Event</button><br></form>
             </div>
         </div>
@@ -66,6 +67,7 @@
                     </select>
                     <textarea name="description" id="descripcion1" ></textarea>
                     <script> CKEDITOR.replace( 'descripcion1');</script>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button type="sumbit" class="btn btn-primary">Update Event</button><br></form>
             </div>
         </div>
@@ -76,6 +78,7 @@
                 <h2>Eliminar Evento</h2>
                 <form class="form-control" method="post" action="/events/delete">
                     <input class="bg-light form-control" type="text" name="cod" placeholder="Código del event" />
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button type="sumbit" class="btn btn-primary">Delete event</button><br></form>
             </div>
         </div>

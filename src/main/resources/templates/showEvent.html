@@ -35,6 +35,7 @@
                 <p>
                 <div class="form-group">
                 <form class="form-control" method="post" action="/events/{{event.cod}}/newTicket"><input class="bg-light form-control" type="text" name="datos" placeholder="Nombre y Apellidos" />
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button type="sumbit" class="btn btn-primary">Sacar Ticket</button><br></form>
             </div>
 
@@ -42,20 +43,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h2>Comprueba tu entrada</h2>
-                <p>
-                <div class="form-group">
-                    <form class="form-control" method="post" action="/events/{{event.cod}}/checkTicket"><input class="bg-light form-control" type="text" name="id" placeholder="Introduce el código de tu ticket" />
-                        <button type="sumbit" class="btn btn-primary">Comprobar Ticket</button><br></form>
-                </div>
 
-                </p>
-            </div>
-        </div>
-    </div>
 </section>
 
 <div class="map-clean"><iframe allowfullscreen="" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2119.706608734698!2d-3.8636448511875536!3d40.33523343422499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418e87d5382393%3A0xd4cb712bec4c73c7!2sPapa%20John&#39;s%20Pizza!5e0!3m2!1ses!2ses!4v1646408922453!5m2!1ses!2ses" width="100%" height="450"></iframe></div>

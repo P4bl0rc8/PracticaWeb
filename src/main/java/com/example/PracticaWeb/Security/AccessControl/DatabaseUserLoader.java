@@ -24,11 +24,4 @@ public class DatabaseUserLoader {
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    @PostConstruct
-    private void initDB() {
-        adminRepository.save(new Admin("admin", encoder.encode("vivaerbeti")));
-        userRepository.save(new User("pablorc08", "pabloredondo@gmail.com", encoder.encode("dellafuentefurboclu"), Role.ROLE_USER));
-        userRepository.save(new User("2k9Pablo", "pablopastor@gmail.com", encoder.encode("pablico99suprimo"), Role.ROLE_USER));
-
-    }
 }

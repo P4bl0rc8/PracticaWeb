@@ -43,6 +43,9 @@
                         <div class="form-group mb-3"><label class="form-label">Password </label><input class="form-control" type="password" name="Password" placeholder="················"></div>
                     </div>
                 </div>
+                </div>
+                </div>
+                </form>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         Events
@@ -56,16 +59,14 @@
                         Tickets
                         <br>
                         {{#ticketList}}
-                        <button class="btn btn-primary"onclick="location.href='/tickets/'">{{.}}</button><br>
-                        <br>
+                        <form class="form-control" method="post" action="/checkTicket"><input class="bg-light form-control" type="hidden" name="id" value="{{id}}" />
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
+                            <button type="sumbit" class="btn btn-primary">{{id}}</button><br></form>
                         {{/ticketList}}
                     </div>
                 </div>
                 <hr>
             </div>
-        </div>
-    </form>
-</div>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/js/Profile-Edit-Form.js"></script>
 </body>
