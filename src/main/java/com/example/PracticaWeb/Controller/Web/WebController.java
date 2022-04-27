@@ -12,6 +12,7 @@ import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,16 +42,13 @@ public class WebController {
     //EVENT CONTROLLERS//
     @GetMapping("/events")
     public String tablon(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         model.addAttribute("anuncios",eventService.findAll());
         return "tablon";
     }
 
     @GetMapping("/events/{cod}")
     public String uniqueEvent(HttpServletRequest request, Model model, @PathVariable String cod){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
+
         if (eventService.unique(cod).isPresent()) {
             model.addAttribute("event", eventService.unique(cod).get());
             return "showEvent";
@@ -62,8 +60,6 @@ public class WebController {
 
     @PostMapping("/events/new")
     public String newEvent(HttpServletRequest request,Model model  , Event event){
-        CsrfToken token=(CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token",token.getToken());
         if (eventService.unique(event.getCod()).isEmpty()){
             PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
             event.setDescription(policy.sanitize(event.getDescription()));
@@ -77,8 +73,7 @@ public class WebController {
 
     @PostMapping("/events/update")
     public String updateEvent(HttpServletRequest request, Model model, Event e){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
+
         if(eventService.unique(e.getCod()).isPresent()) {
             model.addAttribute("event",eventService.updateEvent(e));
             return "showEvent";
@@ -89,8 +84,7 @@ public class WebController {
     }
     @PostMapping("/events/delete")
     public String deleteEvent(HttpServletRequest request, Model model, Event e){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
+
         if (eventService.deleteEvent(e.getCod())){
         model.addAttribute("anuncios",eventService.findAll());
         return "tablon";}
@@ -102,11 +96,12 @@ public class WebController {
     //TICKET CONTROLLERS//
     @PostMapping("/events/{cod}/newTicket")
     public String newTicket(HttpServletRequest request, Model model, @PathVariable String cod, Ticket e){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
-        if (eventService.addTicket(cod,e)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByEmail(e.getDatos()).isPresent()&&ticketService.alreadyExist(e.getDatos()).isEmpty()) {
-             userService.existsUserByEmail(e.getDatos()).get().getTicketsList().add(e);
-            userService.existsUserByEmail(e.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
+        var sec = SecurityContextHolder.getContext().getAuthentication();;
+        var username = sec.getName();
+        e.setDatos(username);
+        if (eventService.addTicket(cod,e)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByUsername(username).isPresent()&&ticketService.alreadyExist(e.getDatos()).isEmpty()) {
+             userService.existsUserByUsername(username).get().getTicketsList().add(e);
+            userService.existsUserByUsername(username).get().getEventsList().add(eventService.unique(cod).get());
             ticketService.addTicket(e);
             model.addAttribute("event",eventService.unique(cod).get());
             model.addAttribute("ticket",e);
@@ -119,8 +114,6 @@ public class WebController {
 
     @PostMapping("/checkTicket")
     public String searchTicket(HttpServletRequest request, Model model, Ticket e){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
      if (ticketService.returnTicket((int) e.getId()).isPresent()){
          model.addAttribute("event",eventService.findbyticket(ticketService.returnTicket((int) e.getId()).get()));
          model.addAttribute("ticket",ticketService.returnTicket((int) e.getId()).get());
@@ -134,24 +127,21 @@ public class WebController {
     //ERROR DEFAULT PAGE//
     @GetMapping("/error")
     public String errorMapping(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
+
         return "error";
     }
 
     ///BUSQUEDA DE EVENTOS
     @GetMapping("/events/query/")
     public String dynamicquery(HttpServletRequest request, Model model,String query){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
+
         model.addAttribute("anuncios",eventService.dynamicquery(query));
         return "searchEvent";
     }
 
     @GetMapping("/events/querybygender/")
     public String dynamicquerygender(HttpServletRequest request, Model model,String gender){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
+
         model.addAttribute("anuncios",eventService.dynamicquerygender(gender));
         return "searchEvent";
     }

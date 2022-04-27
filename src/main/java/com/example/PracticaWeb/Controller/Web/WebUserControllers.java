@@ -2,6 +2,7 @@ package com.example.PracticaWeb.Controller.Web;
 
 import com.example.PracticaWeb.Entity.User;
 import com.example.PracticaWeb.Enumerated.Role;
+import com.example.PracticaWeb.Service.AdminService;
 import com.example.PracticaWeb.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,8 @@ public class WebUserControllers {
 
     @Autowired
     UserService userService;
+    @Autowired
+    AdminService adminService;
 
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Model model){
@@ -50,13 +53,14 @@ public class WebUserControllers {
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("token", token.getToken());
         var sec = SecurityContextHolder.getContext().getAuthentication();
-        User aux = userService.existsUserByUsername(u.getUsername()).get();
-        if(aux == null){
+
+        if(userService.existsUserByUsername(u.getUsername()).isEmpty()){
             if(sec.getName().equals("anonymousUser")){
                 userService.addUser(u);
                 model.addAttribute("user", u);
                 return "userDashboard";
-            }else if(userService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
+            }else if(adminService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
+                userService.addUser(u);
                 return "GestionUsuario";
             }else{
                 return "error";
@@ -69,17 +73,15 @@ public class WebUserControllers {
 
     @PostMapping("/users/update")
     public String updateUser(HttpServletRequest request, Model model, User u){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         var sec = SecurityContextHolder.getContext().getAuthentication();
-        User aux = userService.existsUserByUsername(u.getUsername()).get();
-        if(aux != null && userService.equalsUser(aux, sec.getName())){
-            if(userService.hasRole(sec.getName()).equals(Role.ROLE_USER) && sec.getName().equals(aux.getUsername() )){
-                userService.updateUser(u);
-                model.addAttribute("user", u);
+        var username= sec.getName();
+        if(userService.existsUserByUsername(username).isPresent() && userService.existsUserByUsername(u.getUsername()).isEmpty()){
+            if(userService.hasRole(username).equals(Role.ROLE_USER)){
+                model.addAttribute("user", userService.updateUser(u));
                 return "userDashboard";
-            }else if(userService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
-                return "showUsersAdmin";
+            }else if(adminService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
+                userService.updateUser(u);
+                return "GestionUsuario";
             }else{
                 return "error";
             }
@@ -100,7 +102,8 @@ public class WebUserControllers {
                 userService.deleteUser(u.getUsername());
                 model.addAttribute("user", u);
                 return "login";
-            }else if(userService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
+            }else if(adminService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
+                userService.deleteUser(u.getUsername());
                 return "showUsersAdmin";
             }else{
                 return "error";

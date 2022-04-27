@@ -58,7 +58,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                  .authorizeRequests()
                  .antMatchers( "/GestionEvento", "/GestionUsuario", "/events/new", "/events/update", "/events/delete")
                  .hasRole("ADMIN");
-         http.authorizeRequests().antMatchers(HttpMethod.POST,"/events/new").hasAnyRole("ADMIN","USER");
 
         //LOGIN & LOGOUT//
          http

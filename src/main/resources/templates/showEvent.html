@@ -34,7 +34,7 @@
                 <h2>Comprar Entradas</h2>
                 <p>
                 <div class="form-group">
-                <form class="form-control" method="post" action="/events/{{event.cod}}/newTicket"><input class="bg-light form-control" type="text" name="datos" placeholder="Nombre y Apellidos" />
+                <form class="form-control" method="post" action="/events/{{event.cod}}/newTicket"><input class="bg-light form-control" type="hidden" name="datos" value="default" />
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button type="sumbit" class="btn btn-primary">Sacar Ticket</button><br></form>
             </div>

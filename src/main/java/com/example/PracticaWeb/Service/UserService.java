@@ -89,11 +89,10 @@ public class UserService {
 
     public User updateUser(User user){
 
-        Optional<User> aux = userRepository.findUserByUsername(user.getUsername());
+        Optional<User> aux = userRepository.findUserByEmail(user.getEmail());
         if(aux.isPresent()){
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             aux.get().setUsername(user.getUsername());
-            aux.get().setEmail(user.getEmail());
             aux.get().setPassword(encoder.encode(user.getPassword()));
             userRepository.save(aux.get());
             return aux.get();
