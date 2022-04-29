@@ -29,28 +29,20 @@ public class WebUserControllers {
 
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "login";
     }
     @GetMapping("/loginError")
     public String loginerror(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "loginError";
     }
 
     @GetMapping("/register")
     public String register(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "register";
     }
 
     @PostMapping("/users/new")
     public String newUser(HttpServletRequest request,Model model, User u){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         var sec = SecurityContextHolder.getContext().getAuthentication();
 
         if(userService.existsUserByUsername(u.getUsername()).isEmpty()){

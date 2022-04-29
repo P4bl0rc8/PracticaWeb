@@ -48,7 +48,6 @@ public class WebController {
 
     @GetMapping("/events/{cod}")
     public String uniqueEvent(HttpServletRequest request, Model model, @PathVariable String cod){
-
         if (eventService.unique(cod).isPresent()) {
             model.addAttribute("event", eventService.unique(cod).get());
             return "showEvent";
@@ -73,7 +72,6 @@ public class WebController {
 
     @PostMapping("/events/update")
     public String updateEvent(HttpServletRequest request, Model model, Event e){
-
         if(eventService.unique(e.getCod()).isPresent()) {
             model.addAttribute("event",eventService.updateEvent(e));
             return "showEvent";
@@ -84,7 +82,6 @@ public class WebController {
     }
     @PostMapping("/events/delete")
     public String deleteEvent(HttpServletRequest request, Model model, Event e){
-
         if (eventService.deleteEvent(e.getCod())){
         model.addAttribute("anuncios",eventService.findAll());
         return "tablon";}
@@ -127,21 +124,18 @@ public class WebController {
     //ERROR DEFAULT PAGE//
     @GetMapping("/error")
     public String errorMapping(HttpServletRequest request, Model model){
-
         return "error";
     }
 
     ///BUSQUEDA DE EVENTOS
     @GetMapping("/events/query/")
     public String dynamicquery(HttpServletRequest request, Model model,String query){
-
         model.addAttribute("anuncios",eventService.dynamicquery(query));
         return "searchEvent";
     }
 
     @GetMapping("/events/querybygender/")
     public String dynamicquerygender(HttpServletRequest request, Model model,String gender){
-
         model.addAttribute("anuncios",eventService.dynamicquerygender(gender));
         return "searchEvent";
     }

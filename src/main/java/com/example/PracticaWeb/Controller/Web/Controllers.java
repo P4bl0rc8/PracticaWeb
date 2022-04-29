@@ -53,16 +53,12 @@ public class Controllers {
     public String index1(HttpServletRequest request, Model model){
         var aux = SecurityContextHolder.getContext().getAuthentication();
         var username = aux.getName();
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "index";
     }
     @RequestMapping("/index")
     public String index(HttpServletRequest request, Model model){
         var aux = SecurityContextHolder.getContext().getAuthentication();
         var username = aux.getName();
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "index";
     }
 
@@ -73,8 +69,6 @@ public class Controllers {
         var username = sec.getName();
         Optional<User> user = userService.existsUserByUsername(username);
         Optional<Admin> admin = adminService.existsAdminByUsername(username);
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         if(user.isPresent()){
             if(userService.hasRole(sec.getName()).equals(Role.ROLE_USER)){
                 model.addAttribute("user", user.get());
@@ -93,34 +87,24 @@ public class Controllers {
     }
     @GetMapping("/Contact")
     public String contact(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "Contact";
 
     }
 
     @GetMapping("/AboutUs")
     public String about(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "AboutUs";
     }
     @GetMapping("/OurSpace")
     public String space(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "OurSpace";
     }
     @RequestMapping("/GestionEvento")
     public String events(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "GestionEvento";
     }
     @RequestMapping("/GestionUser")
     public String user(HttpServletRequest request, Model model){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "GestionUsuario";
     }
 

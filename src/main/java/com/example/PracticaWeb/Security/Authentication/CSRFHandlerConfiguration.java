@@ -4,6 +4,7 @@ package com.example.PracticaWeb.Security.Authentication;
 import com.sun.istack.NotNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -26,9 +27,10 @@ class CSRFHandlerInterceptor implements HandlerInterceptor {
                            final ModelAndView modelAndView) throws Exception {
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
         if (modelAndView != null){
-            modelAndView.addObject("token", token.getToken());
-            modelAndView.addObject("headerName",token.getHeaderName());
+            if (!(token == null)){
+                modelAndView.addObject("token", token.getToken());
+                modelAndView.addObject("headerName",token.getHeaderName());
+            }
         }
-
     }
 }

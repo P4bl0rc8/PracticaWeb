@@ -3,6 +3,7 @@ package com.example.PracticaWeb.Security.Authentication;
 import com.example.PracticaWeb.Entity.User;
 import com.example.PracticaWeb.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Configuration
 @Service
 public class UserRepositoryAuthenticationProvider implements AuthenticationProvider {
 
