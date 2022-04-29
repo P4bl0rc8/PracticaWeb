@@ -6,11 +6,13 @@ import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.PracticaWeb.Entity.*;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -80,7 +82,9 @@ public class EventRestController{
     //CREATING AND SHOWING TICKETS//
     @PostMapping("/events/{cod}/ticket")
     public ResponseEntity<Ticket> createTicket(@PathVariable String cod, @RequestBody Ticket entrada){
-        if (eventService.addTicket(cod,entrada)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByEmail(entrada.getDatos()).isPresent()) {
+        var sec = SecurityContextHolder.getContext().getAuthentication();
+        var username = sec.getName();
+        if (eventService.addTicket(cod,entrada)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByEmail(entrada.getDatos()).isPresent() && username.equals(entrada.getDatos())) {
             userService.existsUserByEmail(entrada.getDatos()).get().getTicketsList().add(entrada);
             userService.existsUserByEmail(entrada.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
             ticketService.addTicket(entrada);
@@ -95,11 +99,16 @@ public class EventRestController{
     //SHOWING AN UNIQUE TICKET KNOWING THE EVENT AND ID//
     @GetMapping("/events/{cod}/ticket/{id}")
     public ResponseEntity<Optional<Ticket>> uniqueTicket(@PathVariable String cod, @PathVariable long id){
-        if(eventService.unique(cod).isPresent()){
-            return new ResponseEntity<>(eventService.getTicket(cod,id), HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        var sec = SecurityContextHolder.getContext().getAuthentication();
+        var username = sec.getName();
+        Optional<Ticket> aux = ticketService.returnTicket(id);
+        if(eventService.unique(cod).isPresent() && aux.isPresent()){
+            if(username.equals(aux.get().getDatos())){
+                return new ResponseEntity<>(eventService.getTicket(cod,id), HttpStatus.OK);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 
     //SHOWING ALL TICKETS KNOWING THE EVENT CODE//

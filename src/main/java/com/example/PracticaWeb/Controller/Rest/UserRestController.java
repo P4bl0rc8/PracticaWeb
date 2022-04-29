@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,6 @@ public class UserRestController {
     //CREATE USER//
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    @JsonView(View.User.class)
     public ResponseEntity<User> newUser(@RequestBody User user){
 
         if (userService.existsUserByUsername(user.getUsername()).isEmpty()&&userService.existsUserByEmail(user.getEmail()).isEmpty()) {
@@ -80,13 +80,14 @@ public class UserRestController {
     //UPDATE AN USER//
     @PutMapping("/users/{username}")
     public ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User updatedUser){
-
-        if(userService.existsUserByUsername(username).isPresent()){
+        var sec = SecurityContextHolder.getContext().getAuthentication();
+        var requsername = sec.getName();
+        if(userService.existsUserByUsername(username).isPresent() && userService.equalsUser(updatedUser, requsername)){
             userService.updateUser(updatedUser);
             return new ResponseEntity<>(userService.existsUserByUsername(updatedUser.getUsername()).get(), HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 
     }
     //SHOWING USER TICKETS//
