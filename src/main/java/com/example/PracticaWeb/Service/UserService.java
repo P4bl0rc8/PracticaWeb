@@ -8,8 +8,11 @@ import com.example.PracticaWeb.Enumerated.Role;
 import com.example.PracticaWeb.Repository.EventRepository;
 import com.example.PracticaWeb.Repository.TicketRepository;
 import com.example.PracticaWeb.Repository.UserRepository;
+import com.example.PracticaWeb.Security.AccessControl.CustomOAuth2User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -112,5 +115,15 @@ public class UserService {
     public boolean equalsUser(User user, String username){
         return user.getUsername().equals(username) && user.getPassword().equals(userRepository.findUserByUsername(username).get().getPassword())
                 && user.getEmail().equals(userRepository.findUserByUsername(username).get().getEmail()) && user.getAuthorities().equals(userRepository.findUserByUsername(username).get().getAuthorities());
+    }
+    public void processOAuthPostLogin(DefaultOidcUser user) {
+        BCryptPasswordEncoder aux = new BCryptPasswordEncoder();
+        if (userRepository.findUserByEmail(user.getEmail()).isEmpty()) {
+            User newUser = new User();
+            newUser.setUsername(user.getName());
+            newUser.setPassword(aux.encode(user.getAccessTokenHash()));
+            newUser.setEmail(user.getEmail());
+            userRepository.save(newUser);
+        }
     }
 }

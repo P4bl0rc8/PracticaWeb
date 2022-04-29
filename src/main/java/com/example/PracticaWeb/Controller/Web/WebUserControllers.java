@@ -33,7 +33,6 @@ public class WebUserControllers {
         model.addAttribute("token", token.getToken());
         return "login";
     }
-
     @GetMapping("/loginError")
     public String loginerror(HttpServletRequest request, Model model){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
