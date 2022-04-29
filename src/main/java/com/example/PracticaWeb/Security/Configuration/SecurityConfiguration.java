@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                  .authorizeRequests()
                  .antMatchers("/events/{cod}/newTicket", "/events/{cod}/checkTicket", "/events/query/"
-                         ,"/events/querybygender/", "/users/update", "/users/delete", "/users/view")
+                         ,"/events/querybygender/", "/users/update", "/users/delete", "/users/view","/home")
                  .hasAnyRole("USER","ADMIN");
 
          //ADMIN PAGES//

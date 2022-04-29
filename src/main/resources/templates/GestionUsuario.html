@@ -36,6 +36,7 @@
                     <input class="bg-light form-control" type="text" name="username" placeholder="Username" />
                     <input class="bg-light form-control" type="text" name="email" placeholder="E-mail" />
                     <input class="bg-light form-control" type="password" name="password" placeholder="Password" />
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button type="sumbit" class="btn btn-primary">Create user</button><br></form>
             </div>
         </div>
@@ -48,6 +49,7 @@
                     <input class="bg-light form-control" type="text" name="username" placeholder="Username" />
                     <input class="bg-light form-control" type="text" name="email" placeholder="E-mail" />
                     <input class="bg-light form-control" type="password" name="password" placeholder="Password" />
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button type="sumbit" class="btn btn-primary">Update User</button><br>
                 </form>
             </div>
@@ -59,18 +61,8 @@
                 <h2>Elimina un usuario</h2>
                 <form class="form-control" method="post" action="/users/delete">
                     <input class="bg-light form-control" type="text" name="username" placeholder="Username" />
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button type="sumbit" class="btn btn-primary">Delete usuar</button><br>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row" >
-            <div class="col-lg-8 mx-auto">
-                <h2>Consulta un usuario</h2>
-                <form class="form-control" method="post" action="/users/view">
-                    <input class="bg-light form-control" type="text" name="username" placeholder="Username" />
-                    <button type="sumbit" class="btn btn-primary">Consultar usuario</button><br>
                 </form>
             </div>
         </div>

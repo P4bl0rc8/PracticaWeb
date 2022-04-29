@@ -6,6 +6,7 @@ import com.example.PracticaWeb.Repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,10 @@ public class AdminService {
     }
     public Optional<Admin> existsAdminByUsername(String username){return adminRepository.findAdminByUsername(username);}
     public Role hasRole(String username){
-        return adminRepository.findAdminByUsername(username).get().getRole();
+        try{
+            return adminRepository.findAdminByUsername(username).get().getRole();}
+        catch (NoSuchElementException exception){
+            return null;
+        }
     }
 }

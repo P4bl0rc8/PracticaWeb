@@ -61,7 +61,7 @@ public class WebUserControllers {
                 return "userDashboard";
             }else if(adminService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
                 userService.addUser(u);
-                return "GestionUsuario";
+                return "adminDashboard";
             }else{
                 return "error";
             }
@@ -75,36 +75,33 @@ public class WebUserControllers {
     public String updateUser(HttpServletRequest request, Model model, User u){
         var sec = SecurityContextHolder.getContext().getAuthentication();
         var username= sec.getName();
-        if(userService.existsUserByUsername(username).isPresent() && userService.existsUserByUsername(u.getUsername()).isEmpty()){
-            if(userService.hasRole(username).equals(Role.ROLE_USER)){
+        if(adminService.existsAdminByUsername(username).isPresent()){
+            if (adminService.hasRole(username).equals(Role.ROLE_ADMIN)){
+                userService.updateUser(u);
+                return"adminDashboard";
+            }else{
+                return "error";
+            }
+        }else if(userService.existsUserByUsername(username).isPresent() && userService.existsUserByUsername(u.getUsername()).isEmpty()){
+            if (userService.hasRole(username).equals(Role.ROLE_USER)){
                 model.addAttribute("user", userService.updateUser(u));
                 return "userDashboard";
-            }else if(adminService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
-                userService.updateUser(u);
-                return "GestionUsuario";
             }else{
                 return "error";
             }
         }else{
             return "error";
         }
-
     }
 
     @PostMapping("/users/delete")
     public String deleteUser(HttpServletRequest request, Model model, User u){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         var sec = SecurityContextHolder.getContext().getAuthentication();
-        User aux = userService.existsUserByUsername(u.getUsername()).get();
-        if(aux != null && userService.equalsUser(aux, sec.getName())){
-            if(userService.hasRole(sec.getName()).equals(Role.ROLE_USER)){
+        var username= sec.getName();
+        if(userService.existsUserByUsername(u.getUsername()).isPresent()){
+            if(adminService.hasRole(username).equals(Role.ROLE_ADMIN)){
                 userService.deleteUser(u.getUsername());
-                model.addAttribute("user", u);
-                return "login";
-            }else if(adminService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
-                userService.deleteUser(u.getUsername());
-                return "showUsersAdmin";
+                return "adminDashboard";
             }else{
                 return "error";
             }
@@ -113,25 +110,4 @@ public class WebUserControllers {
         }
     }
 
-    @PostMapping("/users/view")
-    public String searchUser(Model model, User u, HttpServletRequest request){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
-        var sec = SecurityContextHolder.getContext().getAuthentication();
-        User aux = userService.existsUserByUsername(u.getUsername()).get();
-        if(aux == null){
-            if(sec.getName().equals("anonymousUser")){
-                userService.addUser(u);
-                model.addAttribute("user", u);
-                return "userDashboard";
-            }else if(userService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
-                model.addAttribute(u);
-                return "showUsersAdmin";
-            }else{
-                return "error";
-            }
-        }else{
-            return "error";
-        }
-    }
 }

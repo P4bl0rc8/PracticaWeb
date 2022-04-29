@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -94,15 +95,18 @@ public class UserService {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             aux.get().setUsername(user.getUsername());
             aux.get().setPassword(encoder.encode(user.getPassword()));
-            userRepository.save(aux.get());
-            return aux.get();
+            return userRepository.save(aux.get());
         }else{
             return null;
         }
     }
 
     public Role hasRole(String user){
-        return userRepository.findUserByUsername(user).get().getRole();
+        try{
+        return userRepository.findUserByUsername(user).get().getRole();}
+        catch (NoSuchElementException exception){
+            return null;
+        }
     }
 
     public boolean equalsUser(User user, String username){
