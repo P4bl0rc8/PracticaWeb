@@ -38,17 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserService userService;
     private Role rol;
 
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-     }
-
-     @Bean
-    public PasswordEncoder passwordEncoder(){
-         return new BCryptPasswordEncoder(15, new SecureRandom());
-     }
-
      @Override
      protected void configure(HttpSecurity http) throws Exception {
 
