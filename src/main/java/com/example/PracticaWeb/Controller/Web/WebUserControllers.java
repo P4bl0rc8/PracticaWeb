@@ -57,7 +57,7 @@ public class WebUserControllers {
             if(sec.getName().equals("anonymousUser")){
                 userService.addUser(u);
                 model.addAttribute("user", u);
-                return "userDashboard";
+                return "login";
             }else if(adminService.hasRole(sec.getName()).equals(Role.ROLE_ADMIN)){
                 userService.addUser(u);
                 return "adminDashboard";
@@ -81,10 +81,10 @@ public class WebUserControllers {
             }else{
                 return "error";
             }
-        }else if(userService.existsUserByUsername(username).isPresent() && userService.existsUserByUsername(u.getUsername()).isEmpty()){
+        }else if(userService.existsUserByUsername(username).isPresent() && userService.existsUserByUsername(username).get().getEmail().equals(u.getEmail()) && (userService.existsUserByUsername(u.getUsername()).isEmpty()||username.equals(u.getUsername()))){
             if (userService.hasRole(username).equals(Role.ROLE_USER)){
                 model.addAttribute("user", userService.updateUser(u));
-                return "userDashboard";
+                return "login";
             }else{
                 return "error";
             }
