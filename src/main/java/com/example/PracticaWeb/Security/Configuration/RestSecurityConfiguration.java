@@ -19,6 +19,7 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 <<<<<<< HEAD
+<<<<<<< HEAD
                 .antMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/users/{username}").hasRole("ADMIN")
@@ -33,6 +34,8 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/events/{cod}").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/events/{cod}").hasRole("ADMIN");
 =======
+=======
+>>>>>>> parent of dfb1876 (API REST securizada)
                 .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users/{username}").permitAll()
@@ -40,6 +43,9 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/users/{username}").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/users/new").permitAll()
                         .antMatchers("/assets/**").permitAll();
+<<<<<<< HEAD
+>>>>>>> parent of dfb1876 (API REST securizada)
+=======
 >>>>>>> parent of dfb1876 (API REST securizada)
 
         http.csrf().disable();
