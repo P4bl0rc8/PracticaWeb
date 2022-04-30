@@ -1,17 +1,34 @@
 package com.example.PracticaWeb.Security.Configuration;
 
+import com.example.PracticaWeb.Entity.User;
 import com.example.PracticaWeb.Repository.UserRepository;
+import com.example.PracticaWeb.Security.AccessControl.RepositoryUserDetailsService;
+import com.example.PracticaWeb.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.security.SecureRandom;
+import java.util.Collection;
 
 @Configuration
 @Order(1)
 public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    RepositoryUserDetailsService UserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -20,21 +37,27 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users/{username}").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/users/{username}").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/users/{username}").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/users/new").permitAll()
-                        .antMatchers("/assets/**").permitAll();
-
+                .antMatchers(HttpMethod.POST, "/api/events/").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/events/{cod}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/events/{cod}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/events/{cod}/ticket").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/events/{cod}/ticket/id").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/users/{username}").hasAnyRole("ADMIN","USER")
+                .antMatchers(HttpMethod.POST, "/api/users/").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/users/").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/users/{username}").hasAnyRole("ADMIN","USER")
+                .antMatchers(HttpMethod.GET,"/events/{cod}/alltickets").hasRole("ADMIN")
+                .antMatchers("/assets/**").permitAll();
+        http.authorizeRequests().anyRequest().permitAll();
         http.csrf().disable();
         http.httpBasic();
-
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication().withUser("admin").password("$2a$10$aO2PoL9jF4bPAoc7g3NHQu9I.fVPxqv5oQLw78SIpstUaAX7.Zt3m").roles("ADMIN");
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(UserDetailsService).passwordEncoder(new BCryptPasswordEncoder(15, new SecureRandom()));
     }
+
+
 }

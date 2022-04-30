@@ -11,6 +11,7 @@ import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.*;
 
@@ -54,7 +55,15 @@ public class Event {
         this.gender = gender;
         this.description = description;
     }
-
+    public Event(Event e){
+        this.description=e.description;
+        this.name=e.name;
+        this.id=e.id;
+        this.date=e.date;
+        this.gender=e.gender;
+        this.cod=e.cod;
+        this.soldTickets=new ArrayList<>();
+    }
     /*
     private static long cont=0;
 

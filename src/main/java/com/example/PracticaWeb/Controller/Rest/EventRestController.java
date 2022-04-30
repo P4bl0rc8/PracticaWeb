@@ -6,6 +6,7 @@ import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.PracticaWeb.Entity.*;
@@ -40,13 +41,14 @@ public class EventRestController{
     //RETURN ALL EVENTS//
     @GetMapping("/events")
     public Collection<Event> allEvents(){
-        return eventService.findAll();
+        return eventService.parser(eventService.findAll());
     }
     //RETURN ONE EVENT SPECIFYING ITS CODE
     @GetMapping("/events/{cod}")
     public ResponseEntity<Event> uniqueEvent(@PathVariable String cod){
        if(eventService.unique(cod).isPresent()){
-           return new ResponseEntity<>(eventService.unique(cod).get(), HttpStatus.OK);
+           Event aux= new Event(eventService.unique(cod).get());
+           return new ResponseEntity<>(aux, HttpStatus.OK);
        }else{
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
        }
@@ -80,11 +82,14 @@ public class EventRestController{
     //CREATING AND SHOWING TICKETS//
     @PostMapping("/events/{cod}/ticket")
     public ResponseEntity<Ticket> createTicket(@PathVariable String cod, @RequestBody Ticket entrada){
-        if (eventService.addTicket(cod,entrada)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByEmail(entrada.getDatos()).isPresent()) {
-            userService.existsUserByEmail(entrada.getDatos()).get().getTicketsList().add(entrada);
-            userService.existsUserByEmail(entrada.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
+        var sec = SecurityContextHolder.getContext().getAuthentication();
+        var username=sec.getName();
+        entrada.setDatos(username);
+        if (eventService.addTicket(cod,entrada)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByUsername(entrada.getDatos()).isPresent()) {
+            userService.existsUserByUsername(entrada.getDatos()).get().getTicketsList().add(entrada);
+            userService.existsUserByUsername(entrada.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
             ticketService.addTicket(entrada);
-            return  new ResponseEntity<>(eventService.getTicket(cod, entrada.getId()).get(),HttpStatus.OK);
+            return  new ResponseEntity<>(entrada,HttpStatus.OK);
         }
         else{
             return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -103,21 +108,17 @@ public class EventRestController{
     }
 
     //SHOWING ALL TICKETS KNOWING THE EVENT CODE//
-    @GetMapping("/events/{cod}/alltickets")
-    public Collection<Ticket> allTickets(@PathVariable String cod){
-        return eventService.allTickets(cod);
-    }
 
 
     //querys
     @GetMapping("/events/query/")
     public Collection<Event> dynamicquery(String query){
-        return eventService.dynamicquery(query);
+        return eventService.parser(eventService.dynamicquery(query));
     }
 
     @GetMapping("/events/querybygender/")
     public Collection<Event> dynamicquerygender(String gender){
-       return eventService.dynamicquerygender(gender);
+       return eventService.parser(eventService.dynamicquerygender(gender));
     }
 
 
