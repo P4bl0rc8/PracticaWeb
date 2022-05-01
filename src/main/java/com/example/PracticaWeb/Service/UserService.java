@@ -15,10 +15,7 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -36,7 +33,14 @@ public class UserService {
         return userRepository.findUserById(id);
 
     }
-
+    public Collection<User> parser(Collection<User> c) {
+        Collection<User> parsed = new ArrayList<>();
+        for (User e : c) {
+            User aux = new User(e);
+            parsed.add(aux);
+        }
+        return parsed;
+    }
     public Optional<User> existsUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
 

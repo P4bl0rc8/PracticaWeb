@@ -85,7 +85,7 @@ public class EventRestController{
         var sec = SecurityContextHolder.getContext().getAuthentication();
         var username=sec.getName();
         entrada.setDatos(username);
-        if (eventService.addTicket(cod,entrada)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByUsername(entrada.getDatos()).isPresent()) {
+        if (eventService.addTicket(cod,entrada)!=null&&eventService.unique(cod).isPresent()&&userService.existsUserByUsername(entrada.getDatos()).isPresent()&& ticketService.alreadyExist(entrada.getDatos()).isEmpty()) {
             userService.existsUserByUsername(entrada.getDatos()).get().getTicketsList().add(entrada);
             userService.existsUserByUsername(entrada.getDatos()).get().getEventsList().add(eventService.unique(cod).get());
             ticketService.addTicket(entrada);
@@ -100,8 +100,15 @@ public class EventRestController{
     //SHOWING AN UNIQUE TICKET KNOWING THE EVENT AND ID//
     @GetMapping("/events/{cod}/ticket/{id}")
     public ResponseEntity<Optional<Ticket>> uniqueTicket(@PathVariable String cod, @PathVariable long id){
-        if(eventService.unique(cod).isPresent()){
-            return new ResponseEntity<>(eventService.getTicket(cod,id), HttpStatus.OK);
+        var sec = SecurityContextHolder.getContext().getAuthentication();
+        var username=sec.getName();
+        if(eventService.unique(cod).isPresent()&&userService.existsUserByUsername(username).isPresent()&&eventService.getTicket(cod,id).isPresent()){
+
+            if (userService.existsUserByUsername(username).get().getTicketsList().contains(eventService.getTicket(cod, id).get())) {
+                return new ResponseEntity<>(eventService.getTicket(cod, id), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

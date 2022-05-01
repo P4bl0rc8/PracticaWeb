@@ -52,7 +52,14 @@ public class User {
         this.email = email;
         this.password = pass;
     }
-
+    public User(User u){
+        this.username=u.username;
+        this.email=u.email;
+        this.id=u.id;
+        this.password="";
+        this.eventsList= new ArrayList<>();
+        this.ticketsList=new ArrayList<>();
+    }
 
     //GETTERS//
     public String getPassword(){

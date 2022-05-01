@@ -91,10 +91,14 @@ public class EventService {
         }
     }
     public Optional<Ticket> getTicket(String cod, long ticket_id){
-        if(eventRepository.findEventByCod(cod).get().getSoldTickets().contains(ticketRepository.findTicketByid(ticket_id).get())){
-            return ticketRepository.findTicketByid(ticket_id);
+        if (eventRepository.findEventByCod(cod).isPresent()&&ticketRepository.findTicketByid(ticket_id).isPresent()) {
+            if (eventRepository.findEventByCod(cod).get().getSoldTickets().contains(ticketRepository.findTicketByid(ticket_id).get())) {
+                return ticketRepository.findTicketByid(ticket_id);
+            } else {
+                return Optional.empty();
+            }
         }else{
-            return null;
+            return Optional.empty();
         }
     }
     public Collection<Ticket> allTickets(String cod){

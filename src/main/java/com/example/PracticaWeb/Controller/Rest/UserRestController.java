@@ -52,7 +52,8 @@ public class UserRestController {
 
         if (userService.existsUserByUsername(user.getUsername()).isEmpty()&&userService.existsUserByEmail(user.getEmail()).isEmpty()) {
             userService.addUser(user);
-            return new ResponseEntity<>(userService.existsUserById(user.getId()).get(), HttpStatus.OK);
+            User aux= new User(user);
+            return new ResponseEntity<>(aux, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -61,7 +62,7 @@ public class UserRestController {
 
     //RETURN ALL USERS//
     @GetMapping("/users")
-    public Collection<User> allUsers(){ return userService.returnAllUsers(); }
+    public Collection<User> allUsers(){ return userService.parser(userService.returnAllUsers()); }
 
     //RETURN ONE USER BASED ON USERNAME//
     @GetMapping("/users/{username}")
@@ -70,14 +71,14 @@ public class UserRestController {
         var name= sec.getName();
         if(adminService.existsAdminByUsername(name).isPresent() && userService.existsUserByUsername(username).isPresent()){
             if (adminService.hasRole(name).equals(Role.ROLE_ADMIN)){
-                User aux = userService.existsUserByUsername(username).get();
+                User aux = new User(userService.existsUserByUsername(username).get());
                 return new ResponseEntity<>(aux, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }else if( username.equals(name) && userService.existsUserByUsername(name).isPresent()){
             if (userService.hasRole(username).equals(Role.ROLE_USER)){
-                User aux = userService.existsUserByUsername(username).get();
+                User aux = new User(userService.existsUserByUsername(username).get());
                 return new ResponseEntity<>(aux, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -98,7 +99,7 @@ public class UserRestController {
     public ResponseEntity<User> deleteUser(@PathVariable String username){
 
         if(userService.existsUserByUsername(username).isPresent()){
-            User aux = userService.existsUserByUsername(username).get();
+            User aux = new User(userService.existsUserByUsername(username).get());
             userService.deleteUser(username);
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
@@ -114,14 +115,16 @@ public class UserRestController {
         if(adminService.existsAdminByUsername(username).isPresent()){
             if (adminService.hasRole(name).equals(Role.ROLE_ADMIN)){
                 userService.updateUser(updatedUser);
-                return new ResponseEntity<>(userService.existsUserByUsername(updatedUser.getUsername()).get(), HttpStatus.OK);
+                User aux = new User(userService.existsUserByUsername(updatedUser.getUsername()).get());
+                return new ResponseEntity<>(aux, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }else if( username.equals(name) && userService.existsUserByUsername(name).isPresent() && userService.existsUserByUsername(username).get().getEmail().equals(updatedUser.getEmail()) && (userService.existsUserByUsername(updatedUser.getUsername()).isEmpty()||username.equals(updatedUser.getUsername()))){
             if (userService.hasRole(username).equals(Role.ROLE_USER)){
                 userService.updateUser(updatedUser);
-                return new ResponseEntity<>(userService.existsUserByUsername(updatedUser.getUsername()).get(), HttpStatus.OK);
+                User aux = new User(userService.existsUserByUsername(updatedUser.getUsername()).get());
+                return new ResponseEntity<>(aux, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

@@ -59,11 +59,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                  ,"/AboutUs", "/Contact", "/assets/**", "/user/new", "/events","/oauth/**")
                  .permitAll();
 
+         //USER ONLY PAGES (SACAR TICKET Y MIRARLO,ADMIN NO TIENE TICKETS
+         http
+
+                 .authorizeRequests()
+                 .antMatchers("/events/{cod}/newTicket", "/events/{cod}/checkTicket")
+                 .hasAnyRole("USER");
+
+
          //USER PAGES//
          http
 
                  .authorizeRequests()
-                 .antMatchers("/events/{cod}/newTicket", "/events/{cod}/checkTicket", "/events/query/"
+                 .antMatchers("/events/query/"
                          ,"/events/querybygender/", "/users/update", "/users/delete", "/users/view","/home")
                  .hasAnyRole("USER","ADMIN");
 
