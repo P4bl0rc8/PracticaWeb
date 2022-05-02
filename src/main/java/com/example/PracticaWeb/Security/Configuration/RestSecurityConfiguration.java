@@ -46,7 +46,6 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/users/").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/users/").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/users/{username}").hasAnyRole("ADMIN","USER")
-                .antMatchers(HttpMethod.GET,"/events/{cod}/alltickets").hasRole("ADMIN")
                 .antMatchers("/assets/**").permitAll(); 
         http.csrf().disable();
         http.httpBasic();

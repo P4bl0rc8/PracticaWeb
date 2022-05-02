@@ -59,7 +59,7 @@ public class EventRestController{
     @DeleteMapping("/events/{cod}")
     public ResponseEntity<Event> removeEvent(@PathVariable String cod){
         if(eventService.unique(cod).isPresent()){
-            Event aux = eventService.unique(cod).get();
+            Event aux = new Event(eventService.unique(cod).get());
             eventService.deleteEvent(cod);
             return new ResponseEntity<>(aux, HttpStatus.OK);
         }else{
