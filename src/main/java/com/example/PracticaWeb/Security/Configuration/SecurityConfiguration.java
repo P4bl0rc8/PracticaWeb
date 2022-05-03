@@ -56,7 +56,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          http
                  .authorizeRequests()
                  .antMatchers("/", "/index", "/login", "/loginError", "/logout", "/register", "/OurSpace", "/events", "/events/{cod}", "/error"
-                 ,"/AboutUs", "/Contact", "/assets/**", "/user/new", "/events","/oauth/**")
+                 ,"/AboutUs", "/Contact", "/assets/**", "/user/new", "/events","/oauth/**","/events/query/"
+                         ,"/events/querybygender/")
                  .permitAll();
 
          //USER ONLY PAGES (SACAR TICKET Y MIRARLO,ADMIN NO TIENE TICKETS
@@ -71,8 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          http
 
                  .authorizeRequests()
-                 .antMatchers("/events/query/"
-                         ,"/events/querybygender/", "/users/update", "/users/delete", "/users/view","/home")
+                 .antMatchers("/users/update", "/users/delete", "/users/view","/home")
                  .hasAnyRole("USER","ADMIN");
 
          //ADMIN PAGES//
